@@ -18,8 +18,10 @@
 
 <div class="wrap">
   <div class="toolbar">
-    <select id="setFilter"><option value="">All sets</option></select>
-    <input type="text" id="search" placeholder="Filter by code…">
+    <input type="text" id="search" placeholder="Search name or code…">
+    <label class="hide-unlabeled">
+      <input type="checkbox" id="hideUnlabeled"> Hide unlabeled
+    </label>
     <label class="notice">Size
       <input type="range" id="sizeRange" min="110" max="240" value="150">
     </label>
@@ -27,28 +29,39 @@
     <span id="warm" class="notice" style="display:none"></span>
     <span id="count" class="notice"></span>
   </div>
+  <div id="chipSet" class="chip-row"></div>
+  <div id="chipElement" class="chip-row"></div>
+  <div id="chipType" class="chip-row"></div>
   <div id="grid" class="card-grid"></div>
 </div>
 
 <script src="/static/common.js"></script>
+<script src="/static/filters.js"></script>
 <script>
 let CARDS = [];
+const state = {
+  selectedSets: new Set(),
+  selectedElements: new Set(),
+  selectedTypes: new Set(),
+  search: "",
+  hideUnlabeled: false,
+};
 const zoom = setupZoom();
 const grid = document.getElementById("grid");
 
 function render() {
-  const set = document.getElementById("setFilter").value;
-  const q = document.getElementById("search").value.trim().toLowerCase();
-  const items = CARDS.filter(c =>
-    (!set || c.set === set) && (!q || c.id.toLowerCase().includes(q)));
+  const items = CARDS.filter(c => cardPasses(c, state));
   grid.innerHTML = "";
   const frag = document.createDocumentFragment();
   for (const c of items) {
     const tile = document.createElement("div");
     tile.className = "card-tile";
+    const primary = c.name || c.id;
+    const subtitle = c.name ? `<div class="code-sub">${c.id}</div>` : "";
     tile.innerHTML = `
-      <img loading="lazy" src="/api/card/${encodeURIComponent(c.id)}/thumb" alt="${c.id}">
-      <div class="code">${c.id}</div>`;
+      <img loading="lazy" src="/api/card/${encodeURIComponent(c.id)}/thumb" alt="${primary}">
+      <div class="code">${primary}</div>
+      ${subtitle}`;
     tile.querySelector("img").addEventListener("click", () => zoom(c.id));
     frag.appendChild(tile);
   }
@@ -59,15 +72,18 @@ function render() {
 async function load() {
   const data = await api("/api/cards");
   CARDS = data.cards;
-  const sel = document.getElementById("setFilter");
-  for (const s of data.sets) {
-    const o = document.createElement("option"); o.value = s; o.textContent = s;
-    sel.appendChild(o);
-  }
+  renderStandardChips(data, state, render);
   render();
 }
-document.getElementById("setFilter").addEventListener("change", render);
-document.getElementById("search").addEventListener("input", render);
+
+document.getElementById("search").addEventListener("input", (e) => {
+  state.search = e.target.value;
+  render();
+});
+document.getElementById("hideUnlabeled").addEventListener("change", (e) => {
+  state.hideUnlabeled = e.target.checked;
+  render();
+});
 setupSizeSlider(document.getElementById("sizeRange"));
 load();
 watchCacheWarm(document.getElementById("warm"));
