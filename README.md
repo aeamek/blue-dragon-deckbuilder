@@ -13,9 +13,11 @@ card images never leave your disk.
 
 1. **Python 3.10+** — <https://www.python.org/downloads/> (tick *"Add Python to
    PATH"* during install).
-2. **The card image scans.** These are **not** included in this repo (and are
-   gitignored so they never get committed). You'll drop your own copy into the
-   `cards/` folder during setup, below.
+2. **The card image pack.** Not in this repo (card images are gitignored). The
+   maintainer publishes a curated pack of deduplicated scans separately — see
+   the project's distribution link. Download it and unzip it into the `cards/`
+   folder at the root of this repo. Each image's filename stem is its card ID
+   (e.g. `BDS1-EN_0008.jpg` → card `BDS1-EN_0008`).
 
 ## Setup
 
@@ -24,21 +26,7 @@ card images never leave your disk.
    ```bash
    pip install -r requirements.txt
    ```
-3. Get the card scans from your source and copy every image into the `cards/`
-   folder at the root of this repo. Each image's filename stem is its card ID
-   (e.g. `BDS1-EN_0008.jpg` → card `BDS1-EN_0008`).
-
-   If your scans are still organised into per-set subfolders, use the included
-   migration tool to flatten them in one go:
-   ```bash
-   python -m scripts.flatten_cards \
-     --source /path/to/your/nested/scans \
-     --apply
-   ```
-   By default it copies into `<repo>/cards/`. Add `--move` to delete the
-   sources after copying, or run without `--apply` first to preview the plan.
-   The "Strategies & Tips" subfolder (and anything else passed via `--exclude`)
-   is skipped automatically.
+3. Drop the card images into `<repo>/cards/`.
 
 ## Card labels
 
@@ -60,8 +48,9 @@ Vocabularies:
 - **Element / attribute**: light, dark, fire, water, earth, wind, none.
   Only Shadow and Partner cards carry an element; the editor hides the
   element block for Commands and Skills.
-- **Set**: the six original sets, plus anything you add via the "+ Add new
-  set…" entry in the Set dropdown.
+- **Set**: a card can belong to multiple sets (e.g. reprinted in both
+  starter decks). Tick every set the card appears in. The six seeded sets
+  show by default; click "+ new" above the set list to add a new one.
 
 Cards with no `labels.csv` row still appear in the browse grid — they show
 their ID instead of a printed name and don't match any chip filter. The

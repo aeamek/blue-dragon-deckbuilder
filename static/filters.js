@@ -14,12 +14,17 @@ function buildChipRows(vocab) {
 // state = { selectedSets, selectedElements, selectedTypes: Set<string lowercase>,
 //           search: string, hideUnlabeled: bool }
 function cardPasses(card, state) {
-  if (state.hideUnlabeled && !card.name && !card.set) return false;
-  // Default hide-duplicates is on; cards that point at another canonical
-  // drop out of the grid until the toggle is flipped off.
-  if (state.hideDuplicates !== false && card.duplicate_of) return false;
+  const sets = card.set || [];
+  if (state.hideUnlabeled && !card.name && sets.length === 0) return false;
 
-  if (state.selectedSets.size && !state.selectedSets.has((card.set || "").toLowerCase())) return false;
+  if (state.selectedSets.size) {
+    const cardSets = sets.map(s => s.toLowerCase());
+    let any = false;
+    for (const sel of state.selectedSets) {
+      if (cardSets.includes(sel)) { any = true; break; }
+    }
+    if (!any) return false;
+  }
 
   if (state.selectedElements.size) {
     const els = (card.element || []).map(e => e.toLowerCase());

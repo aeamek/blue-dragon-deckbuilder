@@ -28,9 +28,6 @@
         <label class="hide-unlabeled">
           <input type="checkbox" id="hideUnlabeled"> Hide unlabeled
         </label>
-        <label class="hide-unlabeled">
-          <input type="checkbox" id="hideDuplicates" checked> Hide duplicates
-        </label>
         <label class="notice">Size
           <input type="range" id="sizeRange" min="110" max="240" value="150">
         </label>
@@ -83,7 +80,6 @@ const filterState = {
   selectedTypes: new Set(),
   search: "",
   hideUnlabeled: false,
-  hideDuplicates: true,
 };
 
 function deckTotal() {
@@ -111,7 +107,6 @@ function tileFor(c) {
     if (idx >= 0) openEditor(LAST_FILTERED, idx, {
       getVocab: fetchVocab,
       onSave: onCardSaved,
-      allCards: CARDS,
     });
   });
   const minus = tile.querySelector('[data-act=minus]');
@@ -201,12 +196,12 @@ async function flushSaves() {
 function localDeck() {
   const cards = Object.keys(counts).map(id => ({
     id,
-    set: cardMeta[id]?.set || null,
+    set: cardMeta[id]?.set || [],
     name: cardMeta[id]?.name || null,
     count: counts[id],
   }));
   cards.sort((a, b) => {
-    const sa = a.set || "~", sb = b.set || "~";
+    const sa = (a.set[0] || "~"), sb = (b.set[0] || "~");
     if (sa !== sb) return sa < sb ? -1 : 1;
     const na = (a.name || "").toLowerCase(), nb = (b.name || "").toLowerCase();
     if (na !== nb) return na < nb ? -1 : 1;
@@ -261,7 +256,7 @@ function renderDeckList(d) {
       const list = d.cards;
       const idx = list.findIndex(x => x.id === it.id);
       if (idx >= 0) openEditor(list, idx, {
-        getVocab: fetchVocab, onSave: onCardSaved, allCards: CARDS,
+        getVocab: fetchVocab, onSave: onCardSaved,
       });
     });
     list.appendChild(row);
@@ -320,10 +315,6 @@ document.getElementById("search").addEventListener("input", (e) => {
 });
 document.getElementById("hideUnlabeled").addEventListener("change", (e) => {
   filterState.hideUnlabeled = e.target.checked;
-  renderGrid();
-});
-document.getElementById("hideDuplicates").addEventListener("change", (e) => {
-  filterState.hideDuplicates = e.target.checked;
   renderGrid();
 });
 document.getElementById("viewAll").addEventListener("click", () => setView("all"));

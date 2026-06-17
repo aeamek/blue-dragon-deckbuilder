@@ -57,7 +57,9 @@ def build():
     unlabeled = [rec for rec in catalog.values() if rec["label"] is None]
     orphaned = [row_id for row_id in rows if row_id not in catalog]
 
-    sets_list = _first_seen_display(rec["label"].set for rec in labeled)
+    sets_list = _first_seen_display(
+        s for rec in labeled for s in rec["label"].set
+    )
     elements_list = _first_seen_display(
         el for rec in labeled for el in rec["label"].element
     )
@@ -91,48 +93,16 @@ def build():
 def _record_to_api(rec):
     """Public record shape returned over the wire."""
     label = rec["label"]
-    canonical_id = resolve_canonical(rec["id"])
     if label is None:
-        return {"id": rec["id"], "set": None, "name": None,
-                "element": [], "type": None,
-                "duplicate_of": "", "canonical_id": canonical_id}
+        return {"id": rec["id"], "set": [], "name": None,
+                "element": [], "type": None}
     return {
         "id": rec["id"],
-        "set": label.set,
+        "set": list(label.set),
         "name": label.name,
         "element": list(label.element),
         "type": label.type,
-        "duplicate_of": label.duplicate_of,
-        "canonical_id": canonical_id,
     }
-
-
-def resolve_canonical(card_id, _seen=None):
-    """Follow `duplicate_of` pointers until we reach a card that's its own
-    canonical (or a missing target / a cycle, which both stop the chain at
-    the current card_id)."""
-    if _seen is None:
-        _seen = set()
-    if card_id in _seen:
-        return card_id
-    _seen.add(card_id)
-    rec = _catalog.get(card_id)
-    if rec is None:
-        return card_id
-    label = rec["label"]
-    if label is None or not label.duplicate_of:
-        return card_id
-    target = label.duplicate_of
-    if target == card_id or target not in _catalog:
-        return card_id
-    return resolve_canonical(target, _seen)
-
-
-def canonical_group(card_id):
-    """Return the set of all card_ids that resolve to the same canonical."""
-    target = resolve_canonical(card_id)
-    with _lock:
-        return {cid for cid in _catalog if resolve_canonical(cid) == target}
 
 
 def all_cards():
@@ -146,7 +116,10 @@ def all_cards():
         label = rec["label"]
         if label is None:
             return (1, "", "", rec["id"])
-        return (0, set_index.get(label.set, len(set_index)),
+        # Sort by the card's first set membership (sets are ordered in the
+        # label, with the first one acting as the primary for sort purposes).
+        primary_set = label.set[0] if label.set else ""
+        return (0, set_index.get(primary_set, len(set_index)),
                 label.name.lower(), rec["id"])
 
     cards.sort(key=key)
@@ -185,17 +158,24 @@ def save_label(card_id, payload):
     in-memory catalog so the next /api/cards call sees the change without a
     full rescan.
 
-    payload = {"name": str, "set": str, "type": str, "element": list[str],
-               "duplicate_of": str}
+    payload = {"name": str, "set": list[str], "type": str,
+               "element": list[str]}
 
     Raises KeyError if `card_id` is not in the image scan.
     Returns the updated public API record for the card.
     """
     name = (payload.get("name") or "").strip()
-    set_name = (payload.get("set") or "").strip()
+    raw_sets = payload.get("set") or []
     type_ = (payload.get("type") or "").strip()
     raw_elements = payload.get("element") or []
-    duplicate_of = (payload.get("duplicate_of") or "").strip()
+
+    # Sets: trim, drop empties, preserve user-specified order, dedupe.
+    seen_sets = []
+    for s in raw_sets:
+        s = (s or "").strip()
+        if s and s not in seen_sets:
+            seen_sets.append(s)
+    set_tuple = tuple(seen_sets)
 
     if type_ in vocab.TYPES_WITHOUT_ELEMENT:
         element = ()
@@ -207,22 +187,19 @@ def save_label(card_id, payload):
     with _lock:
         if card_id not in _catalog:
             raise KeyError(card_id)
-        # Self-reference makes no sense; treat it as "I am the canonical".
-        if duplicate_of == card_id:
-            duplicate_of = ""
 
         row = labels.LabelRow(
-            id=card_id, set=set_name, name=name,
+            id=card_id, set=set_tuple, name=name,
             element=element, type=type_,
-            duplicate_of=duplicate_of,
         )
         _label_rows[card_id] = row
         labels.dump(_label_rows, config.labels_path())
 
         _catalog[card_id]["label"] = row
 
-        if set_name and set_name not in _sets:
-            _sets.append(set_name)
+        for s in seen_sets:
+            if s not in _sets:
+                _sets.append(s)
 
         return _record_to_api(_catalog[card_id])
 

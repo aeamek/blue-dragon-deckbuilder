@@ -83,9 +83,8 @@ def api_label_put(card_id):
     if not isinstance(body.get("element"), list):
         abort(400)
     if not isinstance(body.get("name", ""), str): abort(400)
-    if not isinstance(body.get("set", ""), str): abort(400)
+    if not isinstance(body.get("set"), list): abort(400)
     if not isinstance(body.get("type", ""), str): abort(400)
-    if not isinstance(body.get("duplicate_of", ""), str): abort(400)
     try:
         rec = catalog.save_label(card_id, body)
     except KeyError:

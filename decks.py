@@ -81,11 +81,12 @@ def get_resolved(deck_id):
         label = rec["label"]
         items.append({
             "id": cid,
-            "set": label.set if label else None,
+            "set": list(label.set) if label else [],
             "name": label.name if label else None,
             "count": cnt,
         })
-    items.sort(key=lambda i: (i["set"] or "~", (i["name"] or "").lower(), i["id"]))
+    items.sort(key=lambda i: ((i["set"][0] if i["set"] else "~"),
+                              (i["name"] or "").lower(), i["id"]))
     return {
         "id": deck["id"],
         "name": deck["name"],
@@ -109,21 +110,6 @@ def create(name):
     return _write(deck)
 
 
-def _group_cap_for(deck_cards, target_id):
-    """Return the maximum number of `target_id` allowed given the existing
-    deck contents. The 3-card limit is shared across cards in the same
-    canonical duplicate group, so adding more of target_id is constrained
-    by what's already in the deck from its group."""
-    target_canonical = catalog.resolve_canonical(target_id)
-    used_in_group = 0
-    for cid, cnt in deck_cards.items():
-        if cid == target_id:
-            continue
-        if catalog.resolve_canonical(cid) == target_canonical:
-            used_in_group += cnt
-    return max(0, config.MAX_COPIES_PER_CARD - used_in_group)
-
-
 def update(deck_id, name=None, cards=None):
     deck = _read(deck_id)
     if deck is None:
@@ -131,25 +117,12 @@ def update(deck_id, name=None, cards=None):
     if name is not None:
         deck["name"] = name.strip() or deck["name"]
     if cards is not None:
-        # Aggregate counts per canonical, then re-distribute. This both
-        # caps each individual id at MAX and caps each group at MAX too.
-        group_totals = {}
-        ordered = []
+        clean = {}
         for cid, cnt in cards.items():
             cnt = int(cnt)
             if cnt <= 0 or not catalog.exists(cid):
                 continue
-            canonical = catalog.resolve_canonical(cid)
-            group_totals.setdefault(canonical, 0)
-            ordered.append((cid, cnt, canonical))
-        clean = {}
-        used = {canonical: 0 for canonical in group_totals}
-        for cid, cnt, canonical in ordered:
-            allowed = config.MAX_COPIES_PER_CARD - used[canonical]
-            take = max(0, min(cnt, allowed, config.MAX_COPIES_PER_CARD))
-            if take > 0:
-                clean[cid] = take
-                used[canonical] += take
+            clean[cid] = min(cnt, config.MAX_COPIES_PER_CARD)
         deck["cards"] = clean
     return _write(deck)
 
@@ -159,15 +132,11 @@ def set_card(deck_id, card_id, count):
     deck = _read(deck_id)
     if deck is None or not catalog.exists(card_id):
         return None
-    count = int(count)
-    if count <= 0:
+    count = max(0, min(int(count), config.MAX_COPIES_PER_CARD))
+    if count == 0:
         deck["cards"].pop(card_id, None)
     else:
-        cap = min(config.MAX_COPIES_PER_CARD,
-                  _group_cap_for(deck["cards"], card_id))
-        deck["cards"][card_id] = max(0, min(count, cap))
-        if deck["cards"][card_id] == 0:
-            deck["cards"].pop(card_id, None)
+        deck["cards"][card_id] = count
     return _write(deck)
 
 

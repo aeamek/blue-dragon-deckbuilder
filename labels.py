@@ -14,7 +14,7 @@ from dataclasses import dataclass
 import vocab
 
 
-REQUIRED_COLUMNS = ("id", "set", "name", "element", "type", "duplicate_of")
+REQUIRED_COLUMNS = ("id", "set", "name", "element", "type")
 
 
 class LabelError(ValueError):
@@ -24,11 +24,21 @@ class LabelError(ValueError):
 @dataclass(frozen=True)
 class LabelRow:
     id: str
-    set: str
+    set: tuple        # pipe-separated in CSV; tuple of set names in memory
     name: str
     element: tuple    # sorted, lowercased, deduped
     type: str
-    duplicate_of: str = ""    # id of the canonical card (empty if this is canonical)
+
+
+def _parse_sets(cell):
+    """`Light Starter|Shadow Starter` -> ('Light Starter', 'Shadow Starter').
+    Order is preserved; duplicates collapse to one entry."""
+    seen = []
+    for part in cell.split("|"):
+        p = part.strip()
+        if p and p not in seen:
+            seen.append(p)
+    return tuple(seen)
 
 
 def _parse_elements(cell):
@@ -52,15 +62,12 @@ def load(path):
             raise LabelError(f"{path}: file is empty (expected header row)")
 
         header = [h.strip() for h in header]
-        # `duplicate_of` is a later addition — old files without the column
-        # are tolerated; the field just defaults to empty for every row.
-        missing = [c for c in REQUIRED_COLUMNS if c not in header
-                   and c != "duplicate_of"]
+        missing = [c for c in REQUIRED_COLUMNS if c not in header]
         if missing:
             raise LabelError(
                 f"{path}: missing required column(s): {', '.join(missing)}"
             )
-        idx = {c: header.index(c) for c in REQUIRED_COLUMNS if c in header}
+        idx = {c: header.index(c) for c in REQUIRED_COLUMNS}
 
         for line_no, raw in enumerate(reader, start=2):
             if not raw or all(not (c or "").strip() for c in raw):
@@ -78,15 +85,14 @@ def load(path):
 
             row = LabelRow(
                 id=row_id,
-                set=cells[idx["set"]],
+                set=_parse_sets(cells[idx["set"]]),
                 name=cells[idx["name"]],
                 element=_parse_elements(cells[idx["element"]]),
                 type=cells[idx["type"]],
-                duplicate_of=(cells[idx["duplicate_of"]]
-                              if "duplicate_of" in idx else ""),
             )
 
-            blanks = [f for f in ("name", "type") if not getattr(row, f)]
+            blanks = ([f for f in ("name", "type") if not getattr(row, f)]
+                      + (["set"] if not row.set else []))
             if not row.element and row.type not in vocab.TYPES_WITHOUT_ELEMENT:
                 blanks.append("element")
             if blanks:
@@ -125,11 +131,10 @@ def dump(rows, path):
                 row = rows[cid]
                 writer.writerow([
                     row.id,
-                    row.set,
+                    "|".join(row.set),
                     row.name,
                     "|".join(row.element),
                     row.type,
-                    row.duplicate_of,
                 ])
         os.replace(tmp, path)
     except Exception:

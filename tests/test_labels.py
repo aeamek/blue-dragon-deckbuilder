@@ -21,7 +21,7 @@ def test_load_basic(tmp_path):
     assert set(rows.keys()) == {"BDS1-EN_0001", "BDS1-EN_0008"}
     jiro = rows["BDS1-EN_0008"]
     assert jiro.id == "BDS1-EN_0008"
-    assert jiro.set == "Light Starter"
+    assert jiro.set == ("Light Starter",)
     assert jiro.name == "Jiro"
     assert jiro.element == ("earth",)
     assert jiro.type == "Partner"
@@ -35,7 +35,7 @@ def test_load_trims_whitespace(tmp_path):
     """)
     rows, _ = labels.load(str(p))
     row = rows["BDS1-EN_0001"]
-    assert row.set == "Light Starter"
+    assert row.set == ("Light Starter",)
     assert row.name == "Phoenix"
     assert row.element == ("light",)
 
@@ -47,7 +47,7 @@ def test_blank_cells_allowed_and_warned(tmp_path):
     """)
     rows, warnings = labels.load(str(p))
     row = rows["BDS1-EN_0001"]
-    assert row.set == "Light Starter"
+    assert row.set == ("Light Starter",)
     assert row.name == ""
     assert row.element == ()
     assert row.type == ""
@@ -178,7 +178,7 @@ def test_dump_roundtrip(tmp_path):
 
     # File is sorted by id.
     lines = out.read_text(encoding="utf-8").splitlines()
-    assert lines[0] == "id,set,name,element,type,duplicate_of"
+    assert lines[0] == "id,set,name,element,type"
     assert lines[1].startswith("BDA-EN_0001,")
     assert lines[2].startswith("BDB-EN_0002,")
     # Multi-element joined with |, alphabetical.
@@ -205,28 +205,3 @@ def test_dump_is_atomic(tmp_path, monkeypatch):
         labels.dump(rows_to_write, str(out))
 
     assert out.read_bytes() == original_bytes
-
-
-def test_duplicate_of_parses(tmp_path):
-    p = tmp_path / "labels.csv"
-    p.write_text(
-        "id,set,name,element,type,duplicate_of\n"
-        "BDH1-EN_0019,Demo Deck,Mechat,,Command,BDS1-EN_0035\n"
-        "BDS1-EN_0035,Light Starter,Mechat,,Command,\n",
-        encoding="utf-8",
-    )
-    rows, _ = labels.load(str(p))
-    assert rows["BDH1-EN_0019"].duplicate_of == "BDS1-EN_0035"
-    assert rows["BDS1-EN_0035"].duplicate_of == ""
-
-
-def test_old_csv_without_duplicate_of_column_still_loads(tmp_path):
-    """Files written before the column existed should keep loading."""
-    p = tmp_path / "labels.csv"
-    p.write_text(
-        "id,set,name,element,type\n"
-        "BDS1-EN_0001,Light Starter,Phoenix,light,Shadow\n",
-        encoding="utf-8",
-    )
-    rows, _ = labels.load(str(p))
-    assert rows["BDS1-EN_0001"].duplicate_of == ""

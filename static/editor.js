@@ -24,9 +24,13 @@ function _build() {
             <span class="ed-pos"></span>
           </div>
           <label>Name <input type="text" class="ed-name" autocomplete="off"></label>
-          <label>Set
-            <select class="ed-set"></select>
-          </label>
+          <div class="ed-set-block">
+            <div class="ed-set-label">
+              Set
+              <button type="button" class="ed-add-set" title="Add a new set">+ new</button>
+            </div>
+            <div class="ed-set-rows"></div>
+          </div>
           <label>Type
             <select class="ed-type"></select>
           </label>
@@ -34,11 +38,6 @@ function _build() {
             <div class="ed-element-label">Attribute</div>
             <div class="ed-element-chips"></div>
           </div>
-          <label>Duplicate of
-            <input type="text" class="ed-dupe" autocomplete="off"
-                   placeholder="card id (leave blank if canonical)">
-          </label>
-          <div class="ed-dupe-info"></div>
           <div class="ed-status"></div>
         </div>
       </div>
@@ -58,9 +57,8 @@ function _build() {
   modal.querySelector(".prev").addEventListener("click", () => move(-1));
   modal.querySelector(".next").addEventListener("click", () => move(+1));
   modal.querySelector(".ed-name").addEventListener("input", scheduleSave);
-  modal.querySelector(".ed-set").addEventListener("change", onSetChange);
+  modal.querySelector(".ed-add-set").addEventListener("click", onAddNewSet);
   modal.querySelector(".ed-type").addEventListener("change", onTypeChange);
-  modal.querySelector(".ed-dupe").addEventListener("input", onDupeChange);
   return modal;
 }
 
@@ -106,45 +104,14 @@ function loadCurrent() {
 
   m.querySelector(".ed-name").value = card.name || "";
 
-  populateSet(card.set || "");
+  populateSet(card.set || []);
   populateType(card.type || "");
   populateElement(card.element || []);
   toggleElementBlock(card.type);
 
-  m.querySelector(".ed-dupe").value = card.duplicate_of || "";
-  refreshDupeInfo();
-
   m.querySelector(".prev").disabled = _state.index === 0;
   m.querySelector(".next").disabled = _state.index === _state.cards.length - 1;
   setStatus("", "");
-}
-
-function refreshDupeInfo() {
-  const info = _modal.querySelector(".ed-dupe-info");
-  const v = _modal.querySelector(".ed-dupe").value.trim();
-  if (!v) { info.textContent = ""; info.dataset.kind = ""; return; }
-  const card = _state.cards[_state.index];
-  if (v === card.id) {
-    info.textContent = "Can't be a duplicate of itself.";
-    info.dataset.kind = "error";
-    return;
-  }
-  // Look up the target in the full CARDS array on the parent page if exposed,
-  // otherwise just confirm the id format.
-  const all = (_state.allCards && _state.allCards.length) ? _state.allCards : _state.cards;
-  const match = all.find(c => c.id === v);
-  if (match) {
-    info.textContent = `→ ${match.name || match.id} (${match.set || "?"})`;
-    info.dataset.kind = "ok";
-  } else {
-    info.textContent = "Unknown card id.";
-    info.dataset.kind = "error";
-  }
-}
-
-function onDupeChange() {
-  refreshDupeInfo();
-  scheduleSave();
 }
 
 function populateSet(currentSet) {
@@ -214,21 +181,6 @@ function toggleElementBlock(type) {
   }
 }
 
-function onSetChange(e) {
-  if (e.target.value === "__add__") {
-    const name = (window.prompt("New set name:") || "").trim();
-    if (!name) {
-      e.target.value = _state.cards[_state.index].set || "";
-      return;
-    }
-    if (!_state.vocab.sets.includes(name)) {
-      _state.vocab.sets.push(name);
-    }
-    populateSet(name);
-  }
-  scheduleSave();
-}
-
 function onTypeChange(e) {
   toggleElementBlock(e.target.value);
   scheduleSave();
@@ -240,13 +192,15 @@ function readForm() {
     m.querySelectorAll(".ed-element-chips input:checked"),
     cb => cb.value
   );
+  const sets = Array.from(
+    m.querySelectorAll(".ed-set-rows input:checked"),
+    cb => cb.value
+  );
   return {
     name: m.querySelector(".ed-name").value.trim(),
-    set: m.querySelector(".ed-set").value === "__add__"
-            ? "" : m.querySelector(".ed-set").value,
+    set: sets,
     type: m.querySelector(".ed-type").value,
     element: elements,
-    duplicate_of: m.querySelector(".ed-dupe").value.trim(),
   };
 }
 
@@ -303,9 +257,6 @@ async function openEditor(cards, index, opts) {
     index,
     vocab,
     onSave: opts.onSave,
-    // Full catalog (every card, not just the filtered view). Used to look
-    // up duplicate_of targets even if they're outside the current filter.
-    allCards: opts.allCards || cards,
   };
   modal.classList.add("open");
   document.addEventListener("keydown", _onKey);

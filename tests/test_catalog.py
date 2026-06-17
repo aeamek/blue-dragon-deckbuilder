@@ -42,7 +42,7 @@ def test_buckets_labeled_unlabeled_orphan(fake_cards):
 
     rec = catalog.get("BDS1-EN_0001")
     assert rec["label"].name == "Phoenix"
-    assert rec["label"].set == "Light Starter"
+    assert rec["label"].set == ("Light Starter",)
 
     rec = catalog.get("BDS1-EN_9999")
     assert rec["label"] is None

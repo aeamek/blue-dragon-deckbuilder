@@ -184,7 +184,8 @@ def render_deck(deck, show_badge=True):
         label = rec.get("label") if rec else None
         if label is None:
             return (1, "", "", cid)
-        return (0, label.set, label.name.lower(), cid)
+        primary_set = label.set[0] if label.set else ""
+        return (0, primary_set, label.name.lower(), cid)
 
     entries.sort(key=_sort_key)
     if not entries:

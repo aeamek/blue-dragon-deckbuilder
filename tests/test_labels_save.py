@@ -32,7 +32,7 @@ def test_save_creates_row(fake_world):
     catalog, csv_path = fake_world
     rec = catalog.save_label("BDS1-EN_0001", {
         "name": "Phoenix",
-        "set": "Light Starter",
+        "set": ["Light Starter"],
         "type": "Shadow",
         "element": ["light"],
     })
@@ -48,13 +48,13 @@ def test_save_updates_existing_row(fake_world):
     catalog, _ = fake_world
     catalog.save_label("BDS1-EN_0001", {
         "name": "Phoenix",
-        "set": "Light Starter",
+        "set": ["Light Starter"],
         "type": "Shadow",
         "element": ["light"],
     })
     rec = catalog.save_label("BDS1-EN_0001", {
         "name": "Phoenix Reborn",
-        "set": "Light Starter",
+        "set": ["Light Starter"],
         "type": "Shadow",
         "element": ["light", "fire"],
     })
@@ -67,7 +67,7 @@ def test_save_unknown_card_raises(fake_world):
     with pytest.raises(KeyError):
         catalog.save_label("NOPE-EN_9999", {
             "name": "Ghost",
-            "set": "Set 1",
+            "set": ["Set 1"],
             "type": "Shadow",
             "element": ["light"],
         })
@@ -77,7 +77,7 @@ def test_save_command_clears_element(fake_world):
     catalog, csv_path = fake_world
     rec = catalog.save_label("BDC1-EN_0001", {
         "name": "Bolt",
-        "set": "Set 1",
+        "set": ["Set 1"],
         "type": "Command",
         "element": ["fire", "light"],
     })
@@ -95,7 +95,7 @@ def test_concurrent_saves_dont_corrupt(fake_world):
         ready.wait()
         try:
             catalog.save_label(cid, {
-                "name": name, "set": "Light Starter",
+                "name": name, "set": ["Light Starter"],
                 "type": "Shadow", "element": ["light"],
             })
         except Exception as e:
@@ -115,7 +115,7 @@ def test_in_memory_catalog_updates(fake_world):
     catalog, _ = fake_world
     catalog.save_label("BDS1-EN_0001", {
         "name": "Phoenix",
-        "set": "Light Starter",
+        "set": ["Light Starter"],
         "type": "Shadow",
         "element": ["light"],
     })
