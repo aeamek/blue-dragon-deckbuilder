@@ -1,5 +1,5 @@
-"""Scan the card-image folders into an in-memory catalog and serve cached
-thumbnails / medium-size views."""
+"""Scan the flat cards folder into an in-memory catalog joined with labels.csv,
+and serve cached thumbnails / medium-size views."""
 import os
 import threading
 from concurrent.futures import ThreadPoolExecutor
@@ -7,10 +7,13 @@ from concurrent.futures import ThreadPoolExecutor
 from PIL import Image
 
 import config
+import labels
 
-# id -> {"id", "set", "filename", "path"}
+# id -> {"id", "filename", "path", "label": LabelRow | None}
 _catalog = {}
-_sets = []          # ordered list of set names that actually contain cards
+_sets = []
+_elements = []
+_types = []
 _lock = threading.Lock()
 
 # Background thumbnail pre-warming progress.
@@ -18,81 +21,122 @@ _warm = {"running": False, "done": 0, "total": 0, "phase": "idle"}
 _warm_lock = threading.Lock()
 
 
-def _nice_set_order(name):
-    """Sort sets in a friendly reading order rather than raw alphabetical."""
-    order = [
-        "Light Starter",
-        "Shadow Starter",
-        "Demo Deck",
-        "Set 1",
-        "Set 2",
-        "Parallel Shadows",
-    ]
-    return (order.index(name) if name in order else len(order), name)
+def _first_seen_display(values):
+    """Dedupe `values` case-insensitively, preserving the first-seen casing.
+    Returns the deduped list sorted by lowercase form."""
+    by_lower = {}
+    for v in values:
+        if not v:
+            continue
+        key = v.lower()
+        by_lower.setdefault(key, v)
+    return [by_lower[k] for k in sorted(by_lower)]
 
 
 def build():
-    """(Re)scan CARDS_DIR. Safe to call again to pick up new files."""
+    """(Re)scan cards_dir and labels.csv. Safe to call again to pick up changes."""
     root = config.cards_dir()
-    catalog = {}
-    sets = set()
-    collisions = []
+    rows, label_warnings = labels.load(config.labels_path())
 
+    catalog = {}
     if os.path.isdir(root):
-        for set_name in sorted(os.listdir(root)):
-            set_path = os.path.join(root, set_name)
-            if not os.path.isdir(set_path) or set_name in config.EXCLUDED_SETS:
+        for fname in sorted(os.listdir(root)):
+            stem, ext = os.path.splitext(fname)
+            if ext.lower() not in config.CARD_EXTS:
                 continue
-            has_card = False
-            for fname in sorted(os.listdir(set_path)):
-                stem, ext = os.path.splitext(fname)
-                if ext.lower() not in config.CARD_EXTS:
-                    continue
-                card_id = stem
-                if card_id in catalog:
-                    # Keep ids globally unique by prefixing the set on collision.
-                    card_id = f"{set_name}__{stem}"
-                    collisions.append(stem)
-                catalog[card_id] = {
-                    "id": card_id,
-                    "set": set_name,
-                    "filename": fname,
-                    "path": os.path.join(set_path, fname),
-                }
-                has_card = True
-            if has_card:
-                sets.add(set_name)
+            catalog[stem] = {
+                "id": stem,
+                "filename": fname,
+                "path": os.path.join(root, fname),
+                "label": rows.get(stem),
+            }
+
+    labeled = [rec for rec in catalog.values() if rec["label"] is not None]
+    unlabeled = [rec for rec in catalog.values() if rec["label"] is None]
+    orphaned = [row_id for row_id in rows if row_id not in catalog]
+
+    sets_list = _first_seen_display(rec["label"].set for rec in labeled)
+    elements_list = _first_seen_display(rec["label"].element for rec in labeled)
+    types_list = _first_seen_display(rec["label"].type for rec in labeled)
 
     with _lock:
         _catalog.clear()
         _catalog.update(catalog)
-        _sets[:] = sorted(sets, key=_nice_set_order)
+        _sets[:] = sets_list
+        _elements[:] = elements_list
+        _types[:] = types_list
 
     return {
         "root": root,
+        "labels_path": config.labels_path(),
         "exists": os.path.isdir(root),
         "card_count": len(catalog),
-        "sets": list(_sets),
-        "collisions": collisions,
+        "labeled_count": len(labeled),
+        "unlabeled_count": len(unlabeled),
+        "orphaned_label_count": len(orphaned),
+        "orphaned_label_ids": sorted(orphaned),
+        "sets": sets_list,
+        "elements": elements_list,
+        "types": types_list,
+        "warnings": label_warnings,
+    }
+
+
+def _record_to_api(rec):
+    """Public record shape returned over the wire."""
+    label = rec["label"]
+    return {
+        "id": rec["id"],
+        "set": label.set if label else None,
+        "name": label.name if label else None,
+        "element": label.element if label else None,
+        "type": label.type if label else None,
     }
 
 
 def all_cards():
-    """List of cards (id + set), ordered by set then id."""
+    """List of cards in display order: labeled first (by set, name, id),
+    unlabeled last (by id)."""
     with _lock:
         cards = list(_catalog.values())
-    cards.sort(key=lambda c: (_nice_set_order(c["set"]), c["id"]))
-    return [{"id": c["id"], "set": c["set"]} for c in cards]
+        set_index = {s: i for i, s in enumerate(_sets)}
+
+    def key(rec):
+        label = rec["label"]
+        if label is None:
+            return (1, "", "", rec["id"])
+        return (0, set_index.get(label.set, len(set_index)),
+                label.name.lower(), rec["id"])
+
+    cards.sort(key=key)
+    return [_record_to_api(c) for c in cards]
 
 
-def sets():
+def sets_seen():
     with _lock:
         return list(_sets)
 
 
+def elements_seen():
+    with _lock:
+        return list(_elements)
+
+
+def types_seen():
+    with _lock:
+        return list(_types)
+
+
 def get(card_id):
+    """Internal accessor — returns the raw record (with `label` object) or None."""
     with _lock:
         return _catalog.get(card_id)
+
+
+def get_api(card_id):
+    """Public accessor — returns the API-shaped dict or None."""
+    rec = get(card_id)
+    return _record_to_api(rec) if rec else None
 
 
 def exists(card_id):
@@ -108,17 +152,13 @@ def _cached_path(card_id, width, cache_dir):
 
 
 def cached_image(card_id, width, cache_dir):
-    """Return a filesystem path to a width-px JPEG of the card, generating and
-    caching it on first request. Returns None if the card is unknown."""
     card = get(card_id)
     if card is None or not os.path.isfile(card["path"]):
         return None
-
     out = _cached_path(card_id, width, cache_dir)
     src_mtime = os.path.getmtime(card["path"])
     if os.path.isfile(out) and os.path.getmtime(out) >= src_mtime:
         return out
-
     with Image.open(card["path"]) as im:
         im = im.convert("RGB")
         if im.width > width:
@@ -157,16 +197,12 @@ def _warm_bump(phase=None):
 
 
 def warm_cache(warm_views=False, workers=None):
-    """Pre-generate every thumbnail (and optionally the medium view cache) so
-    browsing is instant. Skips files already cached. Safe to run in a thread."""
     workers = workers or min(8, (os.cpu_count() or 4))
     with _lock:
         ids = list(_catalog.keys())
-
     jobs = [("thumb", cid) for cid in ids]
     if warm_views:
         jobs += [("view", cid) for cid in ids]
-
     with _warm_lock:
         _warm.update(running=True, done=0, total=len(jobs), phase="thumbnails")
 

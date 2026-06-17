@@ -3,10 +3,12 @@
 Resolution order for the card-image directory:
   1. Environment variable  BD_CARDS_DIR
   2. A local file          config.local.json   ->  {"cards_dir": "..."}
-  3. Default               ../English  (relative to this app folder)
+  3. Default               ./cards             (a flat folder inside the project)
 
-Friends cloning the repo only need to set ONE of those to point at their own
-copy of the card scans.  See README.txt.
+Resolution order for the labels CSV:
+  1. Environment variable  BD_LABELS_PATH
+  2. config.local.json     ->  {"labels_path": "..."}
+  3. Default               ./labels.csv        (committed at the repo root)
 """
 import json
 import os
@@ -29,17 +31,24 @@ _local = _load_local_config()
 
 
 def cards_dir():
-    """Absolute path to the folder that holds the per-set card image folders."""
+    """Absolute path to the flat folder of card images."""
     raw = (
         os.environ.get("BD_CARDS_DIR")
         or _local.get("cards_dir")
-        or os.path.join(APP_DIR, "..", "English")
+        or os.path.join(APP_DIR, "cards")
     )
     return os.path.abspath(raw)
 
 
-# Folder names (sets / products of origin) to ignore when scanning for cards.
-EXCLUDED_SETS = set(_local.get("excluded_sets", ["Strategies & Tips"]))
+def labels_path():
+    """Absolute path to labels.csv."""
+    raw = (
+        os.environ.get("BD_LABELS_PATH")
+        or _local.get("labels_path")
+        or os.path.join(APP_DIR, "labels.csv")
+    )
+    return os.path.abspath(raw)
+
 
 # Image file extensions treated as cards.
 CARD_EXTS = {".jpg", ".jpeg", ".png"}
@@ -64,8 +73,6 @@ EXPORT_MAX_BYTES = int(_local.get("export_max_bytes", 10 * 1024 * 1024))
 # Pre-build the thumbnail cache in the background on startup (fast browsing).
 PREWARM_THUMBS = bool(_local.get("prewarm_thumbs", True))
 # Also pre-build the larger "view" cache (used by zoom + image export).
-# Off by default — it's a much bigger cache (~250 MB) and only speeds up the
-# first zoom / first export.
 PREWARM_VIEWS = bool(_local.get("prewarm_views", False))
 
 for _d in (DECKS_DIR, THUMB_DIR, VIEW_DIR):
