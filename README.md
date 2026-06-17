@@ -13,61 +13,65 @@ card images never leave your disk.
 
 1. **Python 3.10+** — <https://www.python.org/downloads/> (tick *"Add Python to
    PATH"* during install).
-2. **The card image scans.** These are **not** included in this repo. You need a
-   folder that contains one sub-folder per set, each full of card images, e.g.:
+2. **The card image scans.** These are **not** included in this repo (and are
+   gitignored so they never get committed). You'll drop your own copy into the
+   `cards/` folder during setup, below.
 
+## Setup
+
+1. Clone or download this repo.
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
    ```
-   English/
-     Light Starter/      BDS1-EN_0001.jpg ...
-     Shadow Starter/     BDS2-EN_0001.jpg ...
-     Demo Deck/          BDH1-EN_0001.jpg ...
-     Set 1/              BD01-EN_0001.jpg ...
-     Set 2/              BD02-EN_0001.jpg ...
-     Parallel Shadows/   ...
-     Strategies & Tips/  (ignored — not cards)
+3. Get the card scans from your source and copy every image into the `cards/`
+   folder at the root of this repo. Each image's filename stem is its card ID
+   (e.g. `BDS1-EN_0008.jpg` → card `BDS1-EN_0008`).
+
+   If your scans are still organised into per-set subfolders, use the included
+   migration tool to flatten them in one go:
+   ```bash
+   python -m scripts.flatten_cards \
+     --source /path/to/your/nested/scans \
+     --apply
    ```
+   By default it copies into `<repo>/cards/`. Add `--move` to delete the
+   sources after copying, or run without `--apply` first to preview the plan.
+   The "Strategies & Tips" subfolder (and anything else passed via `--exclude`)
+   is skipped automatically.
 
-   Each sub-folder name becomes a selectable **set / product of origin**. Image
-   filenames (without extension) become the card codes shown in the app.
+## Card labels
 
-### Recommended layout (zero-config)
+Metadata for the card scans lives in `labels.csv` at the repo root. Columns are
+`id, set, name, element, type`. This file is committed; if your scans match the
+maintainer's, you'll get name search and element/type filters for free. If
+your scans differ (different printings, different language), edit `labels.csv`
+to match.
 
-Clone this repo **next to** your `English` card folder, so they sit side by side.
-With this layout the app finds the images automatically (its default card path is
-`../English`) and you don't need to configure anything:
+Cards with no `labels.csv` row still appear in the browse grid — they show
+their ID instead of a printed name and don't match any chip filter. The
+"Hide unlabeled" toggle removes them from the grid entirely.
 
-```
-BlueDragon/
-  English/                     <- your card images (one sub-folder per set)
-  blue-dragon-deckbuilder/     <- this repo (run it from here)
-```
+## Card-folder location override (optional)
 
-If your images live somewhere else, point the app at them using either method in
-the next section.
-
----
-
-## Configure the card folder
-
-The app finds your card images using the **first** of these that is set:
+If you'd rather keep your scans somewhere outside the project (e.g. on an
+external drive), point the app at them with **either**:
 
 1. Environment variable **`BD_CARDS_DIR`**
 2. A file named **`config.local.json`** next to `app.py`:
    ```json
-   { "cards_dir": "C:/path/to/BlueDragon/English" }
+   { "cards_dir": "/path/to/your/cards" }
    ```
-3. Default: a folder named `English` sitting next to the app folder
-   (`../English`).
 
-> Tip: copy `config.example.json` to `config.local.json` and edit the path.
-> `config.local.json` is git-ignored, so everyone can set their own path.
+The labels file location can be overridden with `BD_LABELS_PATH` or
+`labels_path` in `config.local.json` (default: `<repo>/labels.csv`).
 
 Optional keys in `config.local.json`:
 
 | Key | Default | Meaning |
 |-----|---------|---------|
-| `cards_dir` | `../English` | Path to the folder of set sub-folders |
-| `excluded_sets` | `["Strategies & Tips"]` | Folder names to skip (non-card material) |
+| `cards_dir` | `./cards` | Path to the flat folder of card images |
+| `labels_path` | `./labels.csv` | Path to the labels CSV |
 | `max_copies_per_card` | `3` | Deck rule: max copies of one card |
 | `deck_target_size` | `40` | Deck size the counter aims for |
 | `export_max_bytes` | `10485760` | Image export size cap (10 MB) |
