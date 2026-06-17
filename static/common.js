@@ -70,17 +70,3 @@ function watchCacheWarm(el) {
   }
   tick();
 }
-
-// Click-to-zoom modal (shared).
-function setupZoom() {
-  const modal = document.createElement("div");
-  modal.className = "modal";
-  modal.innerHTML = '<img alt="card">';
-  modal.addEventListener("click", () => modal.classList.remove("open"));
-  document.body.appendChild(modal);
-  const img = modal.querySelector("img");
-  return (cardId) => {
-    img.src = `/api/card/${encodeURIComponent(cardId)}/view`;
-    modal.classList.add("open");
-  };
-}

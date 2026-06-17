@@ -62,6 +62,7 @@
 
 <script src="/static/common.js"></script>
 <script src="/static/filters.js"></script>
+<script src="/static/editor.js"></script>
 <script>
 const DECK_ID = {{ deck_id|tojson }};
 const MAX = {{ max_copies }};
@@ -70,8 +71,8 @@ let CARDS = [];
 let cardMeta = {};                // id -> { set, name }
 let counts = {};
 let deckOnly = false;
+let LAST_FILTERED = [];
 const tiles = {};
-const zoom = setupZoom();
 
 const filterState = {
   selectedSets: new Set(),
@@ -101,7 +102,13 @@ function tileFor(c) {
       <span class="qty">0</span>
       <button class="mini" data-act="plus">+</button>
     </div>`;
-  tile.querySelector("img").addEventListener("click", () => zoom(c.id));
+  tile.querySelector("img").addEventListener("click", () => {
+    const idx = LAST_FILTERED.indexOf(c);
+    if (idx >= 0) openEditor(LAST_FILTERED, idx, {
+      getVocab: fetchVocab,
+      onSave: onCardSaved,
+    });
+  });
   const minus = tile.querySelector('[data-act=minus]');
   const plus = tile.querySelector('[data-act=plus]');
   const qty = tile.querySelector(".qty");
@@ -126,6 +133,7 @@ function renderGrid() {
   const items = CARDS.filter(c =>
     cardPasses(c, filterState) &&
     (!deckOnly || (counts[c.id] || 0) > 0));
+  LAST_FILTERED = items;
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
   for (const id in tiles) delete tiles[id];
@@ -212,6 +220,14 @@ function applyResolved(d) {
   if (deckOnly) renderGrid(); else for (const id in tiles) refreshTile(id);
 }
 
+function onCardSaved(updated) {
+  const i = CARDS.findIndex(c => c.id === updated.id);
+  if (i >= 0) CARDS[i] = updated;
+  cardMeta[updated.id] = { set: updated.set, name: updated.name };
+  renderDeckList(localDeck());
+  renderGrid();
+}
+
 /* ---------- deck side panel ---------- */
 function renderDeckList(d) {
   const list = document.getElementById("deckList");
@@ -236,7 +252,13 @@ function renderDeckList(d) {
     plus.addEventListener("click", () => changeCard(it.id, it.count + 1));
     plus.disabled = it.count >= MAX;
     rm.addEventListener("click", () => changeCard(it.id, 0));
-    row.querySelector("img").addEventListener("click", () => zoom(it.id));
+    row.querySelector("img").addEventListener("click", () => {
+      const list = d.cards;
+      const idx = list.findIndex(x => x.id === it.id);
+      if (idx >= 0) openEditor(list, idx, {
+        getVocab: fetchVocab, onSave: onCardSaved,
+      });
+    });
     list.appendChild(row);
   }
   const pill = document.getElementById("pill");
