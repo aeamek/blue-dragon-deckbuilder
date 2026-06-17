@@ -34,7 +34,7 @@ def load(path):
     rows = {}
     warnings = []
 
-    with open(path, "r", encoding="utf-8", newline="") as fh:
+    with open(path, "r", encoding="utf-8-sig", newline="") as fh:
         reader = csv.reader(fh)
         try:
             header = next(reader)

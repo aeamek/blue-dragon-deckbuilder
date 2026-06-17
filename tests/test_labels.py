@@ -80,3 +80,17 @@ def test_missing_file_returns_empty_with_warning(tmp_path):
     assert rows == {}
     assert len(warnings) == 1
     assert "not found" in warnings[0].lower()
+
+
+def test_load_handles_utf8_bom(tmp_path):
+    """A CSV saved by Excel / Numbers / Google Sheets starts with a UTF-8 BOM.
+    If we open with plain utf-8 the BOM ends up on the first header so the
+    `id` column 'goes missing' — verify the loader strips it transparently."""
+    p = tmp_path / "labels.csv"
+    body = (
+        "id,set,name,element,type\n"
+        "BDS1-EN_0001,Light Starter,Phoenix,light,shadow\n"
+    )
+    p.write_bytes(b"\xef\xbb\xbf" + body.encode("utf-8"))
+    rows, _ = labels.load(str(p))
+    assert "BDS1-EN_0001" in rows

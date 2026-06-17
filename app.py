@@ -5,8 +5,7 @@ Then open http://127.0.0.1:5000 in your browser.
 """
 import io
 
-from flask import (Flask, abort, jsonify, render_template, request,
-                   send_file, send_from_directory)
+from flask import Flask, abort, jsonify, render_template, request, send_file
 
 import catalog
 import config
@@ -15,7 +14,9 @@ import render
 
 app = Flask(__name__)
 
-_scan = catalog.build()
+# Populated by init(); kept as a module-level handle so the routes can read it
+# without re-scanning on every request.
+_scan = None
 
 
 # --------------------------------------------------------------------------- #
@@ -23,6 +24,8 @@ _scan = catalog.build()
 # --------------------------------------------------------------------------- #
 @app.route("/")
 def home():
+    if _scan is None:
+        init()
     return render_template("index.html", scan=_scan)
 
 
@@ -140,15 +143,22 @@ def api_deck_image(deck_id):
 
 @app.route("/favicon.ico")
 def favicon():
-    return send_from_directory(app.static_folder, "favicon.ico") \
-        if False else ("", 204)
+    return ("", 204)
 
 
-if config.PREWARM_THUMBS and _scan["exists"]:
-    catalog.warm_cache_async(warm_views=config.PREWARM_VIEWS)
+def init():
+    """Scan the catalog and (optionally) kick off the thumbnail prewarm.
+
+    Lives in a function so `import app` (e.g. from tests or a REPL) has zero
+    side effects. Call this before app.run()."""
+    global _scan
+    _scan = catalog.build()
+    if config.PREWARM_THUMBS and _scan["exists"]:
+        catalog.warm_cache_async(warm_views=config.PREWARM_VIEWS)
 
 
 if __name__ == "__main__":
+    init()
     print(f"Cards dir : {_scan['root']}")
     print(f"Found     : {_scan['card_count']} images "
           f"({_scan['labeled_count']} labeled, "
