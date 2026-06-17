@@ -56,10 +56,10 @@ for batch labeling.
 
 Vocabularies:
 
-- **Type**: Shadows, Partners, Skills, Commands.
+- **Type**: Shadow, Partner, Skill, Command.
 - **Element / attribute**: light, dark, fire, water, earth, wind, none.
-  Only Shadows and Partners carry an element; the editor hides the element
-  block for Commands and Skills.
+  Only Shadow and Partner cards carry an element; the editor hides the
+  element block for Commands and Skills.
 - **Set**: the six original sets, plus anything you add via the "+ Add new
   set…" entry in the Set dropdown.
 

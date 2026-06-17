@@ -14,8 +14,8 @@ def write_csv(tmp_path, content):
 def test_load_basic(tmp_path):
     p = write_csv(tmp_path, """
         id,set,name,element,type
-        BDS1-EN_0001,Light Starter,Phoenix,light,Shadows
-        BDS1-EN_0008,Light Starter,Jiro,earth,Partners
+        BDS1-EN_0001,Light Starter,Phoenix,light,Shadow
+        BDS1-EN_0008,Light Starter,Jiro,earth,Partner
     """)
     rows, warnings = labels.load(str(p))
     assert set(rows.keys()) == {"BDS1-EN_0001", "BDS1-EN_0008"}
@@ -24,14 +24,14 @@ def test_load_basic(tmp_path):
     assert jiro.set == "Light Starter"
     assert jiro.name == "Jiro"
     assert jiro.element == ("earth",)
-    assert jiro.type == "Partners"
+    assert jiro.type == "Partner"
     assert warnings == []
 
 
 def test_load_trims_whitespace(tmp_path):
     p = write_csv(tmp_path, """
         id,set,name,element,type
-         BDS1-EN_0001 , Light Starter , Phoenix , light , Shadows
+         BDS1-EN_0001 , Light Starter , Phoenix , light , Shadow
     """)
     rows, _ = labels.load(str(p))
     row = rows["BDS1-EN_0001"]
@@ -57,8 +57,8 @@ def test_blank_cells_allowed_and_warned(tmp_path):
 def test_duplicate_id_raises(tmp_path):
     p = write_csv(tmp_path, """
         id,set,name,element,type
-        BDS1-EN_0001,Light Starter,Phoenix,light,Shadows
-        BDS1-EN_0001,Light Starter,Phoenix2,light,Partners
+        BDS1-EN_0001,Light Starter,Phoenix,light,Shadow
+        BDS1-EN_0001,Light Starter,Phoenix2,light,Partner
     """)
     with pytest.raises(labels.LabelError) as exc:
         labels.load(str(p))
@@ -89,7 +89,7 @@ def test_load_handles_utf8_bom(tmp_path):
     p = tmp_path / "labels.csv"
     body = (
         "id,set,name,element,type\n"
-        "BDS1-EN_0001,Light Starter,Phoenix,light,Shadows\n"
+        "BDS1-EN_0001,Light Starter,Phoenix,light,Shadow\n"
     )
     p.write_bytes(b"\xef\xbb\xbf" + body.encode("utf-8"))
     rows, _ = labels.load(str(p))
@@ -99,7 +99,7 @@ def test_load_handles_utf8_bom(tmp_path):
 def test_element_parses_pipe_separated(tmp_path):
     p = write_csv(tmp_path, """
         id,set,name,element,type
-        BDX1-EN_0001,Set 1,Twoface,light|dark,Shadows
+        BDX1-EN_0001,Set 1,Twoface,light|dark,Shadow
     """)
     rows, _ = labels.load(str(p))
     row = rows["BDX1-EN_0001"]
@@ -110,7 +110,7 @@ def test_element_parses_pipe_separated(tmp_path):
 def test_element_lowercased_and_sorted(tmp_path):
     p = write_csv(tmp_path, """
         id,set,name,element,type
-        BDX1-EN_0001,Set 1,X,Wind|Fire|EARTH,Shadows
+        BDX1-EN_0001,Set 1,X,Wind|Fire|EARTH,Shadow
     """)
     rows, _ = labels.load(str(p))
     assert rows["BDX1-EN_0001"].element == ("earth", "fire", "wind")
@@ -119,7 +119,7 @@ def test_element_lowercased_and_sorted(tmp_path):
 def test_single_element_becomes_singleton_tuple(tmp_path):
     p = write_csv(tmp_path, """
         id,set,name,element,type
-        BDS1-EN_0001,Light Starter,Phoenix,light,Shadows
+        BDS1-EN_0001,Light Starter,Phoenix,light,Shadow
     """)
     rows, _ = labels.load(str(p))
     assert rows["BDS1-EN_0001"].element == ("light",)
@@ -128,7 +128,7 @@ def test_single_element_becomes_singleton_tuple(tmp_path):
 def test_empty_element_is_empty_tuple(tmp_path):
     p = write_csv(tmp_path, """
         id,set,name,element,type
-        BDC1-EN_0001,Set 1,Bolt,,Commands
+        BDC1-EN_0001,Set 1,Bolt,,Command
     """)
     rows, _ = labels.load(str(p))
     assert rows["BDC1-EN_0001"].element == ()
@@ -137,7 +137,7 @@ def test_empty_element_is_empty_tuple(tmp_path):
 def test_unknown_element_warns(tmp_path):
     p = write_csv(tmp_path, """
         id,set,name,element,type
-        BDX1-EN_0001,Set 1,X,purple,Shadows
+        BDX1-EN_0001,Set 1,X,purple,Shadow
     """)
     rows, warnings = labels.load(str(p))
     assert rows["BDX1-EN_0001"].element == ("purple",)
@@ -157,19 +157,19 @@ def test_unknown_type_warns(tmp_path):
 def test_command_with_element_warns(tmp_path):
     p = write_csv(tmp_path, """
         id,set,name,element,type
-        BDC1-EN_0001,Set 1,Bolt,fire,Commands
+        BDC1-EN_0001,Set 1,Bolt,fire,Command
     """)
     rows, warnings = labels.load(str(p))
     # Loaded as-is; the API layer will drop the element. Warning surfaces here.
     assert rows["BDC1-EN_0001"].element == ("fire",)
-    assert any("Commands" in w and "element" in w.lower() for w in warnings)
+    assert any("Command" in w and "element" in w.lower() for w in warnings)
 
 
 def test_dump_roundtrip(tmp_path):
     src_path = write_csv(tmp_path, """
         id,set,name,element,type
-        BDB-EN_0002,Set 1,Beta,light|dark,Shadows
-        BDA-EN_0001,Set 1,Alpha,fire,Partners
+        BDB-EN_0002,Set 1,Beta,light|dark,Shadow
+        BDA-EN_0001,Set 1,Alpha,fire,Partner
     """)
     rows, _ = labels.load(str(src_path))
 
@@ -192,7 +192,7 @@ def test_dump_roundtrip(tmp_path):
 def test_dump_is_atomic(tmp_path, monkeypatch):
     """If os.replace fails the original file must be intact."""
     out = tmp_path / "labels.csv"
-    out.write_text("id,set,name,element,type\noriginal,Set,O,light,Shadows\n",
+    out.write_text("id,set,name,element,type\noriginal,Set,O,light,Shadow\n",
                    encoding="utf-8")
     original_bytes = out.read_bytes()
 
@@ -200,7 +200,7 @@ def test_dump_is_atomic(tmp_path, monkeypatch):
         raise OSError("disk full")
     monkeypatch.setattr("os.replace", boom)
 
-    rows_to_write = {"X": labels.LabelRow("X", "Set", "X", ("light",), "Shadows")}
+    rows_to_write = {"X": labels.LabelRow("X", "Set", "X", ("light",), "Shadow")}
     with pytest.raises(OSError):
         labels.dump(rows_to_write, str(out))
 

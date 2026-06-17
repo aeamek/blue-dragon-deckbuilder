@@ -2,13 +2,13 @@
 list. Sets are extensible — the editor merges these with anything found in
 labels.csv (see catalog.sets_seen)."""
 
-KNOWN_TYPES = ("Shadows", "Partners", "Skills", "Commands")
+KNOWN_TYPES = ("Shadow", "Partner", "Skill", "Command")
 
 KNOWN_ELEMENTS = ("light", "dark", "fire", "water", "earth", "wind", "none")
 
 # Types that CANNOT carry an element. The editor hides the element block for
 # these; the API forces element=[] on save; the loader warns if it sees one.
-TYPES_WITHOUT_ELEMENT = frozenset({"Commands", "Skills"})
+TYPES_WITHOUT_ELEMENT = frozenset({"Command", "Skill"})
 
 SEEDED_SETS = (
     "Light Starter",

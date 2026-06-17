@@ -69,10 +69,10 @@ ELEMENT_COLOR_REFS = {
 
 # Type color centroids — sampled from the right-edge solid strip.
 TYPE_COLOR_REFS = {
-    "Shadows":  (208, 0.60, 0.70),
-    "Partners": (206, 0.43, 0.90),
-    "Commands": (0,   0.79, 0.85),
-    "Skills":   (140, 0.55, 0.55),
+    "Shadow":  (208, 0.60, 0.70),
+    "Partner": (206, 0.43, 0.90),
+    "Command": (0,   0.79, 0.85),
+    "Skill":   (140, 0.55, 0.55),
 }
 
 # If you migrated card images from a nested per-set folder (as
@@ -83,10 +83,10 @@ DEFAULT_SOURCE_TREE = "/Users/wadestern/stuff/English"
 EXCLUDED_SOURCE_FOLDERS = {"Strategies & Tips"}
 
 TYPE_WORD_TO_VOCAB = {
-    "SHADOW":  "Shadows",
-    "PARTNER": "Partners",
-    "SKILL":   "Skills",
-    "COMMAND": "Commands",
+    "SHADOW":  "Shadow",
+    "PARTNER": "Partner",
+    "SKILL":   "Skill",
+    "COMMAND": "Command",
 }
 
 ELEMENT_WORDS = {e.upper(): e for e in vocab.KNOWN_ELEMENTS}
@@ -183,7 +183,7 @@ def extract_name(im, ocr, debug_dir, card_id):
     """Try several (x0, psm) combos; pick the first result that looks like a
     reasonable name. Different card types have the name banner start at
     different x positions (Commands/Skills extend further left than
-    Shadows/Partners, whose element badge eats the leftmost portion)."""
+    Shadow/Partner, whose element badge eats the leftmost portion)."""
     try:
         W, H = im.size
         if debug_dir:
@@ -342,7 +342,7 @@ def classify_card(path, card_id, ocr, debug_dir, source_map):
 
     # Badge presence is a tiebreaker.
     if type_ == "" and badge_present is not None:
-        type_ = "Shadows" if badge_present else "Commands"
+        type_ = "Shadow" if badge_present else "Command"
         type_src = f"badge:{badge_present}_guess"
 
     element, el_src = extract_element(im, ocr, type_, debug_dir, card_id)

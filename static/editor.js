@@ -160,7 +160,7 @@ function populateElement(currentList) {
 
 function toggleElementBlock(type) {
   const block = _modal.querySelector(".ed-element-block");
-  const hide = type === "Commands" || type === "Skills";
+  const hide = type === "Command" || type === "Skill";
   block.style.display = hide ? "none" : "";
   if (hide) {
     for (const cb of _modal.querySelectorAll(".ed-element-chips input")) {

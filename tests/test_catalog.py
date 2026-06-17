@@ -15,9 +15,9 @@ def fake_cards(tmp_path, monkeypatch):
     labels_csv = tmp_path / "labels.csv"
     labels_csv.write_text(
         "id,set,name,element,type\n"
-        "BDS1-EN_0001,Light Starter,Phoenix,Light,Shadows\n"
-        "BDS1-EN_0002,Light Starter,Jiro,light,Partners\n"
-        "BDS1-EN_8888,Light Starter,Ghost,light,Shadows\n",   # orphan
+        "BDS1-EN_0001,Light Starter,Phoenix,Light,Shadow\n"
+        "BDS1-EN_0002,Light Starter,Jiro,light,Partner\n"
+        "BDS1-EN_8888,Light Starter,Ghost,light,Shadow\n",   # orphan
         encoding="utf-8",
     )
 
@@ -58,7 +58,7 @@ def test_seen_values_dedupe_case_insensitive(fake_cards):
     assert elements == ["light"]
 
     types = catalog.types_seen()
-    assert sorted(types) == ["Partners", "Shadows"]
+    assert sorted(types) == ["Partner", "Shadow"]
 
 
 def test_sets_seen_from_labels(fake_cards):
