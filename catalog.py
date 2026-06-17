@@ -106,21 +106,17 @@ def _record_to_api(rec):
 
 
 def all_cards():
-    """List of cards in display order: labeled first (by set, name, id),
-    unlabeled last (by id)."""
+    """List of cards in display order: by type (Shadow, Partner, Command,
+    Skill) then alphabetically by name; unlabeled cards sort last by id."""
     with _lock:
         cards = list(_catalog.values())
-        set_index = {s: i for i, s in enumerate(_sets)}
 
     def key(rec):
         label = rec["label"]
         if label is None:
-            return (1, "", "", rec["id"])
-        # Sort by the card's first set membership (sets are ordered in the
-        # label, with the first one acting as the primary for sort purposes).
-        primary_set = label.set[0] if label.set else ""
-        return (0, set_index.get(primary_set, len(set_index)),
-                label.name.lower(), rec["id"])
+            return (vocab.type_rank(None), "", rec["id"])
+        return (vocab.type_rank(label.type),
+                (label.name or "").lower(), rec["id"])
 
     cards.sort(key=key)
     return [_record_to_api(c) for c in cards]

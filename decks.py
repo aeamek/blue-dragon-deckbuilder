@@ -7,6 +7,7 @@ import time
 
 import catalog
 import config
+import vocab
 
 
 def _slug(name):
@@ -84,9 +85,10 @@ def get_resolved(deck_id):
             "id": cid,
             "set": list(label.set) if label else [],
             "name": label.name if label else None,
+            "type": label.type if label else None,
             "count": cnt,
         })
-    items.sort(key=lambda i: ((i["set"][0] if i["set"] else "~"),
+    items.sort(key=lambda i: (vocab.type_rank(i["type"]),
                               (i["name"] or "").lower(), i["id"]))
     return {
         "id": deck["id"],
@@ -172,16 +174,16 @@ def export_text(deck_id):
         f"# {total} cards · {unique} unique · exported {today}",
         "",
     ]
-    # Sort: primary set (alphabetical), name, id.
+    # Sort: by type (Shadow, Partner, Command, Skill), then name, then id.
     rows = []
     for cid, cnt in cards.items():
         rec = catalog.get(cid)
         label = rec["label"] if rec else None
         name = label.name if label and label.name else "???"
-        primary_set = (label.set[0] if label and label.set else "~")
-        rows.append((primary_set, name.lower(), cid, cnt, name))
+        type_ = label.type if label else None
+        rows.append((vocab.type_rank(type_), name.lower(), cid, cnt, name))
     rows.sort()
-    for _ps, _ln, cid, cnt, name in rows:
+    for _tr, _ln, cid, cnt, name in rows:
         out.append(f"{cnt}  {cid:<28} {name}")
     return "\n".join(out) + "\n"
 

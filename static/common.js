@@ -1,4 +1,20 @@
 // Shared helpers used by all pages.
+
+// Canonical card ordering: by type (Shadow, Partner, Command, Skill), then
+// name, then id. Mirrors vocab.TYPE_ORDER on the server.
+const TYPE_ORDER = ["Shadow", "Partner", "Command", "Skill"];
+function typeRank(t) {
+  const i = TYPE_ORDER.indexOf(t);
+  return i < 0 ? TYPE_ORDER.length : i;
+}
+function compareCards(a, b) {
+  const ra = typeRank(a.type), rb = typeRank(b.type);
+  if (ra !== rb) return ra - rb;
+  const na = (a.name || "").toLowerCase(), nb = (b.name || "").toLowerCase();
+  if (na !== nb) return na < nb ? -1 : 1;
+  return a.id < b.id ? -1 : 1;
+}
+
 async function api(url, opts) {
   const res = await fetch(url, opts);
   if (!res.ok) {
