@@ -13,7 +13,7 @@ BD01-EN_0011,Set 1,Minotaur & Jiro,earth,Partner
 BD01-EN_0012,Set 1,Kelolon,light,Partner
 BD01-EN_0013,Set 1|Demo Deck,Poo Snake,none,Partner
 BD01-EN_0014,Set 1,Chimera & Nene,dark,Partner
-BD01-EN_0015,Set 1,Snforcer Robot,water,Partner
+BD01-EN_0015,Set 1,Snforcer Robot,none,Partner
 BD01-EN_0016,Set 1,Destroyer Robot,none,Partner
 BD01-EN_0017,Set 1,Coordinator,none,Partner
 BD01-EN_0018,Set 1,Zola & Killer Bat,none,Partner
@@ -61,17 +61,17 @@ BD01-EN_0059,Set 1|Demo Deck,Copper Necklace,,Command
 BD01-EN_0060,Set 1,Retreat,,Command
 BD02-EN_0001,Set 2|Parallel Shadows,Gnome,earth,Shadow
 BD02-EN_0002,Set 2|Parallel Shadows,Dwarf,earth,Shadow
-BD02-EN_0003,Set 2,Rilad,earth,Shadow
-BD02-EN_0004,Set 2,Abd,water,Shadow
+BD02-EN_0003,Set 2|Parallel Shadows,Atlas,earth,Shadow
+BD02-EN_0004,Set 2|Parallel Shadows,Nymph,water,Shadow
 BD02-EN_0005,Set 2|Parallel Shadows,Siren,water,Shadow
-BD02-EN_0006,Set 2,Mrvine,water,Shadow
+BD02-EN_0006,Set 2|Parallel Shadows,Undine,water,Shadow
 BD02-EN_0007,Set 2|Parallel Shadows,Poseidon,water,Shadow
 BD02-EN_0008,Set 2|Parallel Shadows,Titan,earth,Shadow
 BD02-EN_0009,Set 2|Parallel Shadows,Black Shadow Type One,dark,Shadow
-BD02-EN_0010,Set 2,Security Mecha Robo,water,Partner
-BD02-EN_0011,Set 2,Scything Skull-Spider,water,Partner
+BD02-EN_0010,Set 2,Security Mecha Robo,none,Partner
+BD02-EN_0011,Set 2,Scything Skull-Spider,none,Partner
 BD02-EN_0012,Set 2,Machine Gun Crab,water,Partner
-BD02-EN_0013,Set 2,Rilgurner Roboscorpion,water,Partner
+BD02-EN_0013,Set 2,Tailgunner Robo-Scorpion,water,Partner
 BD02-EN_0014,Set 2,Centipede S 2,water,Partner
 BD02-EN_0015,Set 2,Minister Sia2,light,Partner
 BD02-EN_0016,Set 2,Azure Abyssal Dragon,water,Partner
@@ -87,11 +87,11 @@ BD02-EN_0025,Set 2,Zola,none,Partner
 BD02-EN_0026,Set 2,Marumaro,light,Partner
 BD02-EN_0027,Set 2,Saber Tiger,light,Partner
 BD02-EN_0028,Set 2,Nene,dark,Partner
-BD02-EN_0029,Set 2,Deathroysr,dark,Partner
+BD02-EN_0029,Set 2,Deathroy,dark,Partner
 BD02-EN_0030,Set 2,Szabo,dark,Partner
 BD02-EN_0031,Set 2,Armored Fish,water,Partner
 BD02-EN_0032,Set 2,Alding Mammoth,water,Partner
-BD02-EN_0033,Set 2,Relolon Defender,water,Partner
+BD02-EN_0033,Set 2,Kelolon Defender,water,Partner
 BD02-EN_0034,Set 2,Pelicon,water,Partner
 BD02-EN_0035,Set 2,Polar Lazy Bear,water,Partner
 BD02-EN_0036,Set 2,Bomber Mecha Crab,water,Partner
@@ -115,7 +115,7 @@ BD02-EN_0053,Set 2,Stone Wolf Ghost,earth,Partner
 BD02-EN_0054,Set 2,Missile Mole,earth,Partner
 BD02-EN_0055,Set 2,Flying Needle Mole,earth,Partner
 BD02-EN_0056,Set 2,Acornivore,earth,Partner
-BD02-EN_0057,Set 2,Flamdutan Vinukan,earth,Partner
+BD02-EN_0057,Set 2,Flamboyant Dinoram,earth,Partner
 BD02-EN_0058,Set 2|Demo Deck,Critical,,Skill
 BD02-EN_0059,Set 2|Demo Deck,Surprise,,Skill
 BD02-EN_0060,Set 2|Demo Deck,Guard,,Command
@@ -216,8 +216,5 @@ BDS2-EN_0014,Shadow Starter,Land Shark,dark,Partner
 BDS2-EN_0015,Shadow Starter,Szabo,dark,Partner
 BDS2-EN_0029,Shadow Starter,One-on-One Battle,,Skill
 BDS2-EN_0034,Shadow Starter,Secret Training,,Command
-Receipt_20230713_0006,Parallel Shadows,Atlas,earth,Shadow
 Receipt_20230713_0008,Parallel Shadows,Blue Dragon Lv.1,none,Shadow
-Receipt_20230713_0009,Parallel Shadows,Nymph,water,Shadow
-Receipt_20230713_0011,Parallel Shadows,Undine,water,Shadow
 Receipt_20230713_0016,Parallel Shadows,Guardian Angel,wind,Shadow
