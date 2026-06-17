@@ -67,19 +67,25 @@ def get(deck_id):
 
 
 def get_resolved(deck_id):
-    """Deck plus per-card set info, dropping any cards no longer in the catalog."""
+    """Deck plus per-card label info, dropping any cards no longer in the catalog."""
     deck = _read(deck_id)
     if deck is None:
         return None
     items = []
     missing = []
     for cid, cnt in deck["cards"].items():
-        card = catalog.get(cid)
-        if card is None:
+        rec = catalog.get(cid)
+        if rec is None:
             missing.append(cid)
             continue
-        items.append({"id": cid, "set": card["set"], "count": cnt})
-    items.sort(key=lambda i: (i["set"], i["id"]))
+        label = rec["label"]
+        items.append({
+            "id": cid,
+            "set": label.set if label else None,
+            "name": label.name if label else None,
+            "count": cnt,
+        })
+    items.sort(key=lambda i: (i["set"] or "~", (i["name"] or "").lower(), i["id"]))
     return {
         "id": deck["id"],
         "name": deck["name"],
