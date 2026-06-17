@@ -13,6 +13,7 @@ function _build() {
   const modal = document.createElement("div");
   modal.className = "editor-modal";
   modal.innerHTML = `
+    <button class="ed-close" aria-label="close" title="Close (Esc)">×</button>
     <div class="editor-stage">
       <button class="ed-nav prev" aria-label="previous">◀</button>
       <div class="editor-body">
@@ -39,9 +40,15 @@ function _build() {
       <button class="ed-nav next" aria-label="next">▶</button>
     </div>`;
   document.body.appendChild(modal);
+  // Close on click of: backdrop, stage gaps, or the X button.
   modal.addEventListener("click", (e) => {
-    if (e.target === modal) close();
+    if (e.target === modal
+        || e.target.classList.contains("editor-stage")
+        || e.target.classList.contains("editor-body")) {
+      close();
+    }
   });
+  modal.querySelector(".ed-close").addEventListener("click", close);
   modal.querySelector(".prev").addEventListener("click", () => move(-1));
   modal.querySelector(".next").addEventListener("click", () => move(+1));
   modal.querySelector(".ed-name").addEventListener("input", scheduleSave);
@@ -219,22 +226,32 @@ function flushSave() {
 
 async function doSave() {
   if (!_state) return;
-  const card = _state.cards[_state.index];
+  // Capture the target card up-front; navigation can move _state.index
+  // before the fetch resolves, and we must not let the response land on
+  // the wrong card.
+  const savedIndex = _state.index;
+  const card = _state.cards[savedIndex];
+  const cardId = card.id;
   const payload = readForm();
   setStatus("Saving…", "saving");
   try {
-    const res = await fetch(`/api/labels/${encodeURIComponent(card.id)}`, {
+    const res = await fetch(`/api/labels/${encodeURIComponent(cardId)}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
     if (!res.ok) throw new Error("HTTP " + res.status);
     const updated = await res.json();
-    _state.cards[_state.index] = updated;
-    setStatus("Saved ✓", "saved");
-    if (_state.onSave) _state.onSave(updated);
+    if (_state) {
+      _state.cards[savedIndex] = updated;
+      // Only refresh the status if we're still viewing the same card.
+      if (_state.index === savedIndex) setStatus("Saved ✓", "saved");
+    }
+    if (_state && _state.onSave) _state.onSave(updated);
   } catch (err) {
-    setStatus("Save failed: " + err.message, "error");
+    if (_state && _state.index === savedIndex) {
+      setStatus("Save failed: " + err.message, "error");
+    }
   }
 }
 
