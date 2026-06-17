@@ -75,14 +75,12 @@ TYPE_COLOR_REFS = {
     "Skills":   (140, 0.55, 0.55),
 }
 
-SET_PREFIX_MAP = {
-    "BDS1": "Light Starter",
-    "BDS2": "Shadow Starter",
-    "BDH1": "Demo Deck",
-    "BD01": "Set 1",
-    "BD02": "Set 2",
-    "BDP1": "Parallel Shadows",
-}
+# If you migrated card images from a nested per-set folder (as
+# scripts/flatten_cards.py does), the original folder is the authoritative
+# source of each card's set. The script builds a filename -> set map from
+# this directory on startup. Override via --source-tree.
+DEFAULT_SOURCE_TREE = "/Users/wadestern/stuff/English"
+EXCLUDED_SOURCE_FOLDERS = {"Strategies & Tips"}
 
 TYPE_WORD_TO_VOCAB = {
     "SHADOW":  "Shadows",
@@ -308,54 +306,35 @@ def extract_element(im, ocr, type_str, debug_dir, card_id):
     return [], "fail"
 
 
-# Anchor character substitutions for the suffix that precedes 'EN' in the
-# card code. OCR commonly garbles O<->0/U/D, I/L<->1, Z<->2.
-_SUFFIX_NORMALIZE = str.maketrans({
-    "O": "0", "U": "0", "D": "0", "Q": "0",
-    "I": "1", "L": "1", "T": "1",
-    "Z": "2",
-})
-SET_SUFFIX_MAP = {
-    "01": "Set 1",
-    "02": "Set 2",
-    "H1": "Demo Deck",
-    "S1": "Light Starter",
-    "S2": "Shadow Starter",
-    "P1": "Parallel Shadows",
-}
+def build_source_set_map(source_tree):
+    """Walk the original per-set folder structure and produce {stem -> set}.
+    Returns empty dict if `source_tree` doesn't exist."""
+    mapping = {}
+    if not os.path.isdir(source_tree):
+        return mapping
+    for entry in sorted(os.listdir(source_tree)):
+        sub = os.path.join(source_tree, entry)
+        if not os.path.isdir(sub) or entry in EXCLUDED_SOURCE_FOLDERS:
+            continue
+        for fname in os.listdir(sub):
+            stem, ext = os.path.splitext(fname)
+            if ext.lower() in config.CARD_EXTS:
+                mapping[stem] = entry
+    return mapping
 
 
-def extract_set(im, ocr, card_id, debug_dir):
-    m = re.match(r"^(BD[A-Z0-9]{2,3})-EN_\d+$", card_id)
-    if m and m.group(1) in SET_PREFIX_MAP:
-        return SET_PREFIX_MAP[m.group(1)], "filename"
-    try:
-        W, H = im.size
-        c = im.crop((int(0.45*W), int(0.955*H), int(0.90*W), int(0.985*H)))
-        if debug_dir:
-            c.save(os.path.join(debug_dir, f"{card_id}__card_code.jpg"), quality=88)
-        # Autocontrast on grayscale helped tiny text in tests.
-        from PIL import ImageOps
-        prep = ImageOps.autocontrast(ImageOps.grayscale(c), cutoff=5)
-        big = prep.resize((prep.width * 4, prep.height * 4), Image.LANCZOS)
-        text = _ocr_text(ocr, big, psm=8)
-        # Strip whitespace and punctuation so 'BBUI-ENOOD' becomes 'BBUIENOOD'.
-        squashed = re.sub(r"[^A-Z0-9]", "", text.upper())
-        # Grab the 2 chars before 'EN' anywhere in the string.
-        for m in re.finditer(r"([A-Z0-9]{2})EN", squashed):
-            tok = m.group(1)
-            norm = tok.translate(_SUFFIX_NORMALIZE)
-            if norm in SET_SUFFIX_MAP:
-                return SET_SUFFIX_MAP[norm], f"ocr({tok}->{norm})"
-        return "", f"ocr_unmatched:{text!r}"
-    except Exception:
-        return "", "fail"
+def extract_set(card_id, source_map):
+    """Set comes from the source folder where the image originally lived
+    (preserved at DEFAULT_SOURCE_TREE / --source-tree). Pure lookup; no OCR."""
+    if card_id in source_map:
+        return source_map[card_id], "source_tree"
+    return "", "not_in_source_tree"
 
 
 # --------------------------------------------------------------------------- #
 # Main pipeline
 # --------------------------------------------------------------------------- #
-def classify_card(path, card_id, ocr, debug_dir):
+def classify_card(path, card_id, ocr, debug_dir, source_map):
     im = Image.open(path)
     name, name_src = extract_name(im, ocr, debug_dir, card_id)
     badge_present = has_element_badge(im, debug_dir, card_id)
@@ -367,7 +346,7 @@ def classify_card(path, card_id, ocr, debug_dir):
         type_src = f"badge:{badge_present}_guess"
 
     element, el_src = extract_element(im, ocr, type_, debug_dir, card_id)
-    set_, set_src = extract_set(im, ocr, card_id, debug_dir)
+    set_, set_src = extract_set(card_id, source_map)
 
     return {
         "id": card_id,
@@ -435,6 +414,9 @@ def main(argv=None):
                         help="Process only the listed card_id(s). Repeat for multiple.")
     parser.add_argument("--debug", action="store_true",
                         help="Save all crops to cache/auto_label_debug/ for tuning.")
+    parser.add_argument("--source-tree", default=DEFAULT_SOURCE_TREE,
+                        help=("Original per-set folder tree, used to resolve "
+                              f"each card's set. Default: {DEFAULT_SOURCE_TREE}"))
     args = parser.parse_args(argv)
 
     ocr = _import_pytesseract()
@@ -450,6 +432,12 @@ def main(argv=None):
     existing, warnings = labels.load(config.labels_path())
     for w in warnings:
         print(f"warn: {w}")
+
+    source_map = build_source_set_map(args.source_tree)
+    if source_map:
+        print(f"Loaded {len(source_map)} file->set mappings from {args.source_tree}")
+    else:
+        print(f"warn: source tree {args.source_tree} not found; set will be left blank")
 
     paths = []
     for fname in sorted(os.listdir(cards_dir)):
@@ -475,7 +463,7 @@ def main(argv=None):
             skipped += 1
             continue
         try:
-            card = classify_card(path, stem, ocr, debug_dir)
+            card = classify_card(path, stem, ocr, debug_dir, source_map)
         except Exception as e:
             print(f"  {stem}: classify failed: {e}")
             continue
