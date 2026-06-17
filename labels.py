@@ -14,7 +14,7 @@ from dataclasses import dataclass
 import vocab
 
 
-REQUIRED_COLUMNS = ("id", "set", "name", "element", "type")
+REQUIRED_COLUMNS = ("id", "set", "name", "element", "type", "duplicate_of")
 
 
 class LabelError(ValueError):
@@ -28,6 +28,7 @@ class LabelRow:
     name: str
     element: tuple    # sorted, lowercased, deduped
     type: str
+    duplicate_of: str = ""    # id of the canonical card (empty if this is canonical)
 
 
 def _parse_elements(cell):
@@ -51,12 +52,15 @@ def load(path):
             raise LabelError(f"{path}: file is empty (expected header row)")
 
         header = [h.strip() for h in header]
-        missing = [c for c in REQUIRED_COLUMNS if c not in header]
+        # `duplicate_of` is a later addition — old files without the column
+        # are tolerated; the field just defaults to empty for every row.
+        missing = [c for c in REQUIRED_COLUMNS if c not in header
+                   and c != "duplicate_of"]
         if missing:
             raise LabelError(
                 f"{path}: missing required column(s): {', '.join(missing)}"
             )
-        idx = {c: header.index(c) for c in REQUIRED_COLUMNS}
+        idx = {c: header.index(c) for c in REQUIRED_COLUMNS if c in header}
 
         for line_no, raw in enumerate(reader, start=2):
             if not raw or all(not (c or "").strip() for c in raw):
@@ -78,6 +82,8 @@ def load(path):
                 name=cells[idx["name"]],
                 element=_parse_elements(cells[idx["element"]]),
                 type=cells[idx["type"]],
+                duplicate_of=(cells[idx["duplicate_of"]]
+                              if "duplicate_of" in idx else ""),
             )
 
             blanks = [f for f in ("name", "type") if not getattr(row, f)]
@@ -123,6 +129,7 @@ def dump(rows, path):
                     row.name,
                     "|".join(row.element),
                     row.type,
+                    row.duplicate_of,
                 ])
         os.replace(tmp, path)
     except Exception:

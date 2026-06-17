@@ -1,273 +1,273 @@
-id,set,name,element,type
-BD01-EN_0001,Set 1,Sulvier,fire,Shadow
-BD01-EN_0002,Set 1,Sword Fighter,fire,Shadow
-BD01-EN_0003,Set 1,Grand Rright,fire,Shadow
-BD01-EN_0004,Set 1,Legerd Rright,fire,Shadow
-BD01-EN_0005,Set 1,Pegasus,wind,Shadow
-BD01-EN_0006,Set 1,Sylphide 4,wind,Shadow
-BD01-EN_0007,Set 1,Lephyrus,wind,Shadow
-BD01-EN_0008,Set 1,Swarvian Angec,wind,Shadow
-BD01-EN_0009,Set 1,Blue Dragon Shu,light,Partner
-BD01-EN_0010,Set 1,Phoenix G Ruure,fire,Partner
-BD01-EN_0011,Set 1,Minotaur Jiro,earth,Partner
-BD01-EN_0012,Set 1,Relolon Tsir,light,Partner
-BD01-EN_0013,Set 1,Fuo Snare,wind,Partner
-BD01-EN_0014,Set 1,Chimera Gang,water,Partner
-BD01-EN_0015,Set 1,Snforcer Robot,water,Partner
-BD01-EN_0016,Set 1,Jestroyer Robu 2,wind,Partner
-BD01-EN_0017,Set 1,Coordinator 2,wind,Partner
-BD01-EN_0018,Set 1,Bola Killer Bal 2,water,Partner
-BD01-EN_0019,Set 1,Jarunaro Saber Tiger 2,wind,Partner
-BD01-EN_0020,Set 1,Ing Jibral Sd,light,Partner
-BD01-EN_0021,Set 1,Militant A,wind,Partner
-BD01-EN_0022,Set 1,Jacked Shurdoman 2,light,Partner
-BD01-EN_0023,Set 1,Ed Razor Ghost,fire,Partner
-BD01-EN_0024,Set 1,Ionesaurus 2,earth,Partner
-BD01-EN_0025,Set 1,Ireworks Rat,fire,Partner
-BD01-EN_0026,Set 1,Sicel Giant,fire,Partner
-BD01-EN_0027,Set 1,Flameraptor,fire,Partner
-BD01-EN_0028,Set 1,Chneider Sx,dark,Partner
-BD01-EN_0029,Set 1,Andropov 3,dark,Partner
-BD01-EN_0030,Set 1,Suyu-5070,wind,Partner
-BD01-EN_0031,Set 1,Mechosaur,wind,Partner
-BD01-EN_0032,Set 1,Dullahanssc2D,wind,Partner
-BD01-EN_0033,Set 1,Crested Cocrririce 2,wind,Partner
-BD01-EN_0034,Set 1,Moudy Dragon 2,fire,Partner
-BD01-EN_0035,Set 1,Blizzard Dragon,water,Partner
-BD01-EN_0036,Set 1,Phantom Vragon 2,dark,Partner
-BD01-EN_0037,Set 1,Spark Dragon 3,earth,Partner
-BD01-EN_0038,Set 1,Methyst Dragon,wind,Partner
-BD01-EN_0039,Set 1,Gicsword,,Command
-BD01-EN_0040,Set 1,Fendrc'W Yy,,Command
-BD01-EN_0041,Set 1,Pert Minority,,Command
-BD01-EN_0042,Set 1,Out Batile,,Command
-BD01-EN_0043,Set 1,Ino Urt Tq The Waderru,,Command
-BD01-EN_0044,Set 1,Bsorb Ss,,Command
-BD01-EN_0045,Set 1,Tc E,,Command
-BD01-EN_0046,Set 1,Timidate,,Command
-BD01-EN_0047,Set 1,Ece A,,Command
-BD01-EN_0048,Set 1,Piress Barrier,,Command
-BD01-EN_0049,Set 1,Ution Ss,,Command
-BD01-EN_0050,Set 1,Unpunch 9,,Command
-BD01-EN_0051,Set 1,Mn Shool Ss,,Command
-BD01-EN_0052,Set 1,Tality Elixiris,,Command
-BD01-EN_0053,Set 1,Rage Ss,,Command
-BD01-EN_0054,Set 1,Are A,,Command
-BD01-EN_0055,Set 1,Ae Roe Oe The Fp In,,Command
-BD01-EN_0056,Set 1,We Device 9,,Command
-BD01-EN_0057,Set 1,Inting Instinct,,Command
-BD01-EN_0058,Set 1,Pper Bracelet,,Command
-BD01-EN_0059,Set 1,Jpper Necruace,,Command
-BD01-EN_0060,Set 1,Treat,,Command
-BD02-EN_0001,Set 2,Grume,earth,Shadow
-BD02-EN_0002,Set 2,Dwarf,earth,Shadow
-BD02-EN_0003,Set 2,Rilad,earth,Shadow
-BD02-EN_0004,Set 2,Abd,water,Shadow
-BD02-EN_0005,Set 2,Siren,water,Shadow
-BD02-EN_0006,Set 2,Mrvine,water,Shadow
-BD02-EN_0007,Set 2,Poseidon 9,water,Shadow
-BD02-EN_0008,Set 2,Tan Eg,earth,Shadow
-BD02-EN_0009,Set 2,Dlagr Shavuw Itec U,dark,Shadow
-BD02-EN_0010,Set 2,Segurity Mecha Robo 2,water,Partner
-BD02-EN_0011,Set 2,Scything Skullspider 2,water,Partner
-BD02-EN_0012,Set 2,Machine Gun Crab,water,Partner
-BD02-EN_0013,Set 2,Rilgurner Roboscorpion 2,water,Partner
-BD02-EN_0014,Set 2,Centipede S 2,water,Partner
-BD02-EN_0015,Set 2,Minister Sia2,light,Partner
-BD02-EN_0016,Set 2,Ature Abyssal Dragon 2,water,Partner
-BD02-EN_0017,Set 2,Pink Soldier 3,fire,Partner
-BD02-EN_0018,Set 2,Dragnovstsiaa,dark,Partner
-BD02-EN_0019,Set 2,Vanov Si,dark,Partner
-BD02-EN_0020,Set 2,Gustovt Sy,dark,Partner
-BD02-EN_0021,Set 2,Tornado Raptor 2,wind,Partner
-BD02-EN_0022,Set 2,Mm 6,earth,Partner
-BD02-EN_0023,Set 2,Klukec Esti D,fire,Partner
-BD02-EN_0024,Set 2,,earth,Partner
-BD02-EN_0025,Set 2,Olas C,water,Partner
-BD02-EN_0026,Set 2,Marumaro,wind,Partner
-BD02-EN_0027,Set 2,Tet Saber Tiger,water,Partner
-BD02-EN_0028,Set 2,Nene Sr,dark,Partner
-BD02-EN_0029,Set 2,Deathroysr,dark,Partner
-BD02-EN_0030,Set 2,Aaby Ct,dark,Partner
-BD02-EN_0031,Set 2,Armored Fish 2,water,Partner
-BD02-EN_0032,Set 2,Alding Mammoth 2,water,Partner
-BD02-EN_0033,Set 2,Relolon Defender 2,water,Partner
-BD02-EN_0034,Set 2,Pelicon S 2,water,Partner
-BD02-EN_0035,Set 2,Polar Lazy Bear 2,water,Partner
-BD02-EN_0036,Set 2,Bomber Mecha Crab 2,water,Partner
-BD02-EN_0037,Set 2,Poison Helmet,water,Partner
-BD02-EN_0038,Set 2,Jia 86H,water,Partner
-BD02-EN_0039,Set 2,,water,Partner
-BD02-EN_0040,Set 2,Numerun F 2,wind,Partner
-BD02-EN_0041,Set 2,Delphinium 2,dark,Partner
-BD02-EN_0042,Set 2,Salinas 2,dark,Partner
-BD02-EN_0043,Set 2,Euphir Stias,dark,Shadow
-BD02-EN_0044,Set 2,Saver Rc E See,dark,Partner
-BD02-EN_0045,Set 2,Varovit Se,dark,Partner
-BD02-EN_0046,Set 2,Alvhaimw,dark,Partner
-BD02-EN_0047,Set 2,Jeucalion E,dark,Partner
-BD02-EN_0048,Set 2,Vil Mural O,earth,Partner
-BD02-EN_0049,Set 2,Misfortune Mural 2,earth,Partner
-BD02-EN_0050,Set 2,Poison Mural 2,earth,Partner
-BD02-EN_0051,Set 2,Chaos Mural 1,earth,Partner
-BD02-EN_0052,Set 2,Vrange Solvick 2,earth,Partner
-BD02-EN_0053,Set 2,Tore Wolf Ghos 2,earth,Partner
-BD02-EN_0054,Set 2,Missile Mole 2,earth,Partner
-BD02-EN_0055,Set 2,Lying Needle Mole 2,earth,Partner
-BD02-EN_0056,Set 2,Sda A Et,earth,Partner
-BD02-EN_0057,Set 2,Flamdutan Vinukan 2,earth,Partner
-BD02-EN_0058,Set 2,Hhicag I,,Command
-BD02-EN_0059,Set 2,Ikpride,,Command
-BD02-EN_0060,Set 2,Ward,,Command
-BD02-EN_0061,Set 2,Nesse,,Command
-BD02-EN_0062,Set 2,Llateral Damage,,Command
-BD02-EN_0063,Set 2,Avows Write,,Command
-BD02-EN_0064,Set 2,Load Ss,,Command
-BD02-EN_0065,Set 2,Eat Tidal Wave,,Command
-BD02-EN_0066,Set 2,Tack Q Recover,,Command
-BD02-EN_0067,Set 2,Inspiracy,,Command
-BD02-EN_0068,Set 2,Imouflage,,Command
-BD02-EN_0069,Set 2,Stical Advantage 7,,Command
-BD02-EN_0070,Set 2,Cker Punch,,Command
-BD02-EN_0071,Set 2,Ir Exchange,,Command
-BD02-EN_0072,Set 2,Illy,,Command
-BD02-EN_0073,Set 2,Witch,,Command
-BD02-EN_0074,Set 2,Iendly Fireso,,Command
-BD02-EN_0075,Set 2,Bral Bracelet,,Command
-BD02-EN_0076,Set 2,Sral Necklace,,Command
-BD02-EN_0077,Set 2,Ioenix Talon,,Command
-BD02-EN_0078,Set 2,Vival Measures,,Command
-BD02-EN_0079,Set 2,Inforcemen Ts,,Command
-BD02-EN_0080,Set 2,,,Command
-BD02-EN_0081,Set 2,Racle Fountain,,Command
-BD02-EN_0082,Set 2,Jiher Ocean As,,Command
-BD02-EN_0083,Set 2,Are,,Command
-BD02-EN_0084,Set 2,Igry Quake,,Command
-BD02-EN_0085,Set 2,Irror Earring,,Command
-BD02-EN_0086,Set 2,Eddling,,Command
-BD02-EN_0087,Set 2,Leased Potentials,,Command
-BD02-EN_0088,Set 2,Ing-Range Attach,,Command
-BD02-EN_0089,Set 2,Adsawlt,,Command
-BD02-EN_0090,Set 2,Ject,,Command
-BD02-EN_0091,Set 2,Trifying Breathig,,Command
-BD02-EN_0092,Set 2,,,Command
-BD02-EN_0093,Set 2,All Of Defense,,Command
-BD02-EN_0094,Set 2,Surrection 9,,Command
-BD02-EN_0095,Set 2,Lk Sop,,Command
-BD02-EN_0096,Set 2,Ver A,,Command
-BD02-EN_0097,Set 2,Ame Bracelet,,Command
-BD02-EN_0098,Set 2,Ater Bracelet,,Command
-BD02-EN_0099,Set 2,Ind Bracelet,,Command
-BD02-EN_0100,Set 2,Irth Bracelet,,Command
-BDH1-EN_0001,Demo Deck,Fruenia Ff,light,Shadow
-BDH1-EN_0002,Demo Deck,Minotaur,light,Shadow
-BDH1-EN_0003,Demo Deck,Dlwe Dragon,light,Shadow
-BDH1-EN_0004,Demo Deck,M4 6,light,Partner
-BDH1-EN_0005,Demo Deck,Luke 8S,fire,Partner
-BDH1-EN_0006,Demo Deck,Yiky,light,Partner
-BDH1-EN_0007,Demo Deck,Dlwe Dragun G Onl,light,Partner
-BDH1-EN_0008,Demo Deck,Sucrairice,wind,Partner
-BDH1-EN_0009,Demo Deck,Puu Snare,wind,Partner
-BDH1-EN_0010,Demo Deck,Fatrat Sar,light,Partner
-BDH1-EN_0011,Demo Deck,Green Grunt 2,wind,Partner
-BDH1-EN_0012,Demo Deck,Midnight Ghost 2,dark,Partner
-BDH1-EN_0013,Demo Deck,Gicsword,,Command
-BDH1-EN_0014,Demo Deck,Ure,,Command
-BDH1-EN_0015,Demo Deck,Higal,,Command
-BDH1-EN_0016,Demo Deck,Ward,,Command
-BDH1-EN_0017,Demo Deck,Irprise,,Command
-BDH1-EN_0018,Demo Deck,Eld Barrier,,Command
-BDH1-EN_0019,Demo Deck,Chap,,Command
-BDH1-EN_0020,Demo Deck,Pper Necklace,,Command
-BDS1-EN_0001,Light Starter,Phoenix,light,Shadow
-BDS1-EN_0002,Light Starter,Minqtawk 9,light,Shadow
-BDS1-EN_0003,Light Starter,Blue Dragon,light,Shadow
-BDS1-EN_0004,Light Starter,Saber Tiger 5,light,Shadow
-BDS1-EN_0005,Light Starter,Killer Bat,light,Shadow
-BDS1-EN_0006,Light Starter,,light,Partner
-BDS1-EN_0007,Light Starter,Kluke Ctst,fire,Partner
-BDS1-EN_0008,Light Starter,Jrko-Tid,earth,Partner
-BDS1-EN_0009,Light Starter,Lolac Tl,water,Partner
-BDS1-EN_0010,Light Starter,Marumaro Os,wind,Partner
-BDS1-EN_0011,Light Starter,Bouquet Scsagr,wind,Partner
-BDS1-EN_0012,Light Starter,Vegalass,earth,Partner
-BDS1-EN_0013,Light Starter,Conrad Tccxr,earth,Partner
-BDS1-EN_0014,Light Starter,Snow Wolf Ghost 2,water,Partner
-BDS1-EN_0015,Light Starter,Flame Wolf Ghost 2,fire,Partner
-BDS1-EN_0016,Light Starter,Cepire Wolf Ghost,dark,Partner
-BDS1-EN_0017,Light Starter,Blazing Jelly 3,fire,Partner
-BDS1-EN_0018,Light Starter,Midnight Ghost 2,dark,Partner
-BDS1-EN_0019,Light Starter,Fai Rat Ce,earth,Partner
-BDS1-EN_0020,Light Starter,Hot Hot Hydra 2,fire,Partner
-BDS1-EN_0021,Light Starter,Boreal Raptor 2,wind,Partner
-BDS1-EN_0022,Light Starter,Sale Wolf Ghost 2,wind,Partner
-BDS1-EN_0023,Light Starter,Dure F,,Command
-BDS1-EN_0024,Light Starter,Otsweep,,Command
-BDS1-EN_0025,Light Starter,Ase-Fire 7,,Command
-BDS1-EN_0026,Light Starter,Uke Frying'Pa,,Command
-BDS1-EN_0027,Light Starter,Schief,,Command
-BDS1-EN_0028,Light Starter,Gic Sword Lvc,,Command
-BDS1-EN_0029,Light Starter,E Honorable Shict,,Command
-BDS1-EN_0030,Light Starter,Unterattack 600,,Command
-BDS1-EN_0031,Light Starter,Solute Counteraita,,Command
-BDS1-EN_0032,Light Starter,Ck In The Game,,Command
-BDS1-EN_0033,Light Starter,Lias Cookies,,Command
-BDS1-EN_0034,Light Starter,Eld Barrier,,Command
-BDS1-EN_0035,Light Starter,Chat,,Command
-BDS1-EN_0036,Light Starter,Oenix Wings,,Command
-BDS1-EN_0037,Light Starter,Rted Audience Wiiniain,,Command
-BDS1-EN_0038,Light Starter,Visibility 8,,Command
-BDS2-EN_0001,Shadow Starter,Chimera Lv,,Command
-BDS2-EN_0002,Shadow Starter,Chimera Lvdi0,,Command
-BDS2-EN_0003,Shadow Starter,Chimera Lv30,dark,Shadow
-BDS2-EN_0004,Shadow Starter,Chimera Lvhis,dark,Shadow
-BDS2-EN_0005,Shadow Starter,Nene,dark,Partner
-BDS2-EN_0006,Shadow Starter,Deathroy - 1,dark,Partner
-BDS2-EN_0007,Shadow Starter,General Logi 1,dark,Partner
-BDS2-EN_0008,Shadow Starter,Gilliam,dark,Partner
-BDS2-EN_0009,Shadow Starter,Cynthia Ss,dark,Partner
-BDS2-EN_0010,Shadow Starter,Lemaire A,dark,Partner
-BDS2-EN_0011,Shadow Starter,Servan Meghr Rudd A 2,water,Partner
-BDS2-EN_0012,Shadow Starter,Servant Mecha Robob 2,water,Partner
-BDS2-EN_0013,Shadow Starter,Defense Mecha Robo 2,water,Partner
-BDS2-EN_0014,Shadow Starter,Lard Shark 62,dark,Partner
-BDS2-EN_0015,Shadow Starter,Siaboccsciy,dark,Partner
-BDS2-EN_0016,Shadow Starter,Blazing Jelly 2,fire,Partner
-BDS2-EN_0017,Shadow Starter,Midnight Ghost 2,dark,Partner
-BDS2-EN_0018,Shadow Starter,Fatrat S2X,earth,Partner
-BDS2-EN_0019,Shadow Starter,Hot Hot Hydra 2,fire,Partner
-BDS2-EN_0020,Shadow Starter,Boreal Raptor 2,wind,Partner
-BDS2-EN_0021,Shadow Starter,Sale Wolf Ghus 2,wind,Partner
-BDS2-EN_0022,Shadow Starter,Dure,,Command
-BDS2-EN_0023,Shadow Starter,Ot Sweep,,Command
-BDS2-EN_0024,Shadow Starter,Ase-Fire Ss,,Command
-BDS2-EN_0025,Shadow Starter,Schief,,Command
-BDS2-EN_0026,Shadow Starter,Gic Sword Lv2,,Command
-BDS2-EN_0027,Shadow Starter,Junterattack Boo,,Command
-BDS2-EN_0028,Shadow Starter,Solute Counteratta,,Command
-BDS2-EN_0029,Shadow Starter,E-On-One Battl,,Command
-BDS2-EN_0030,Shadow Starter,Ihlia'S Cookies,,Command
-BDS2-EN_0031,Shadow Starter,Eld Barrier,,Command
-BDS2-EN_0032,Shadow Starter,Echat Sss,,Command
-BDS2-EN_0033,Shadow Starter,Joenix Wing 9,,Command
-BDS2-EN_0034,Shadow Starter,Cret Training,,Command
-BDS2-EN_0035,Shadow Starter,Ack In The Games,,Command
-BDS2-EN_0036,Shadow Starter,Anted Audience With Aik,,Command
-BDS2-EN_0037,Shadow Starter,Visibility 9,,Command
-Receipt_20230713_0001,Parallel Shadows,Sword Fighter,fire,Shadow
-Receipt_20230713_0002,Parallel Shadows,Grand Knight,fire,Shadow
-Receipt_20230713_0003,Parallel Shadows,Legend Knight,fire,Shadow
-Receipt_20230713_0004,Parallel Shadows,Gnome,earth,Shadow
-Receipt_20230713_0005,Parallel Shadows,Dwarf,earth,Shadow
-Receipt_20230713_0006,Parallel Shadows,Atlas,earth,Shadow
-Receipt_20230713_0007,Parallel Shadows,Tan F,earth,Shadow
-Receipt_20230713_0008,Parallel Shadows,Blue Dragon Lv,water,Shadow
-Receipt_20230713_0009,Parallel Shadows,Nymph 3,water,Shadow
-Receipt_20230713_0010,Parallel Shadows,Siren,water,Shadow
-Receipt_20230713_0011,Parallel Shadows,Undine,water,Shadow
-Receipt_20230713_0012,Parallel Shadows,Poseidon,water,Shadow
-Receipt_20230713_0013,Parallel Shadows,Pegasws,wind,Shadow
-Receipt_20230713_0014,Parallel Shadows,Silfhive 2,wind,Shadow
-Receipt_20230713_0015,Parallel Shadows,Lcphyrus,wind,Shadow
-Receipt_20230713_0016,Parallel Shadows,Guarvian Angel,wind,Shadow
-Receipt_20230713_0017,Parallel Shadows,Black Shadow Ive,dark,Shadow
+id,set,name,element,type,duplicate_of
+BD01-EN_0001,Set 1,Sulvier,fire,Shadow,
+BD01-EN_0002,Set 1,Sword Fighter,fire,Shadow,
+BD01-EN_0003,Set 1,Grand Knight,fire,Shadow,
+BD01-EN_0004,Set 1,Legend Knight,fire,Shadow,
+BD01-EN_0005,Set 1,Pegasus,wind,Shadow,
+BD01-EN_0006,Set 1,Sylphide 4,wind,Shadow,
+BD01-EN_0007,Set 1,Zephyrus,wind,Shadow,
+BD01-EN_0008,Set 1,Swarvian Angec,wind,Shadow,
+BD01-EN_0009,Set 1,Blue Dragon & Shu,light,Partner,
+BD01-EN_0010,Set 1,Phoenix & Kluke,fire,Partner,
+BD01-EN_0011,Set 1,Minotaur & Jiro,earth,Partner,
+BD01-EN_0012,Set 1,Kelolon,light,Partner,
+BD01-EN_0013,Set 1,Poo Snake,none,Partner,
+BD01-EN_0014,Set 1,Chimera & Nene,dark,Partner,
+BD01-EN_0015,Set 1,Snforcer Robot,water,Partner,
+BD01-EN_0016,Set 1,Destroyer Robot,none,Partner,
+BD01-EN_0017,Set 1,Coordinator,none,Partner,
+BD01-EN_0018,Set 1,Zola & Killer Bat,none,Partner,
+BD01-EN_0019,Set 1,Marumaro & Saber Tiger,wind,Partner,
+BD01-EN_0020,Set 1,King Jibral,light,Partner,
+BD01-EN_0021,Set 1,Militant,none,Partner,
+BD01-EN_0022,Set 1,Sacred Swordsman,light,Partner,
+BD01-EN_0023,Set 1,Red Razor Ghost,fire,Partner,
+BD01-EN_0024,Set 1,Stonesaurus,earth,Partner,
+BD01-EN_0025,Set 1,Fireworks Rat,fire,Partner,
+BD01-EN_0026,Set 1,Steel gian,fire,Partner,
+BD01-EN_0027,Set 1,Flame Raptor,fire,Partner,
+BD01-EN_0028,Set 1,Schneider,dark,Partner,
+BD01-EN_0029,Set 1,Andropov,dark,Partner,
+BD01-EN_0030,Set 1,Suyu-5070,wind,Partner,
+BD01-EN_0031,Set 1,Mechosaur,wind,Partner,
+BD01-EN_0032,Set 1,Dullahan,wind,Partner,
+BD01-EN_0033,Set 1,Crested Cockatrice,wind,Partner,
+BD01-EN_0034,Set 1,Moody Dragon,fire,Partner,
+BD01-EN_0035,Set 1,Blizzard Dragon,water,Partner,
+BD01-EN_0036,Set 1,Phantom Dragon,dark,Partner,
+BD01-EN_0037,Set 1,Spark Dragon 3,earth,Partner,
+BD01-EN_0038,Set 1,Amethyst Dragon,wind,Partner,
+BD01-EN_0039,Set 1,Magic Sword,,Command,
+BD01-EN_0040,Set 1,Defend,,Command,
+BD01-EN_0041,Set 1,Expert Minority,,Command,
+BD01-EN_0042,Set 1,All-Out Battle,,Command,
+BD01-EN_0043,Set 1,Transport to the Underworld,,Command,
+BD01-EN_0044,Set 1,Absorb,,Command,
+BD01-EN_0045,Set 1,Tc E,,Command,
+BD01-EN_0046,Set 1,Timidate,,Command,
+BD01-EN_0047,Set 1,Coerce,,Command,
+BD01-EN_0048,Set 1,Distress Barrier,,Command,
+BD01-EN_0049,Set 1,Ution Ss,,Command,
+BD01-EN_0050,Set 1,Unpunch 9,,Command,
+BD01-EN_0051,Set 1,Aim 'N' Shoot,,Command,
+BD01-EN_0052,Set 1,Tality Elixiris,,Command,
+BD01-EN_0053,Set 1,Forage,,Command,
+BD01-EN_0054,Set 1,Flare,,Command,
+BD01-EN_0055,Set 1,The Book Of The Beginning,,Command,
+BD01-EN_0056,Set 1,We Device 9,,Command,
+BD01-EN_0057,Set 1,Hunting Instinct,,Command,
+BD01-EN_0058,Set 1,Copper Bracelelt,,Command,
+BD01-EN_0059,Set 1,Copper Necklace,,Command,
+BD01-EN_0060,Set 1,Treat,,Command,
+BD02-EN_0001,Set 2,Grume,earth,Shadow,
+BD02-EN_0002,Set 2,Dwarf,earth,Shadow,
+BD02-EN_0003,Set 2,Rilad,earth,Shadow,
+BD02-EN_0004,Set 2,Abd,water,Shadow,
+BD02-EN_0005,Set 2,Siren,water,Shadow,
+BD02-EN_0006,Set 2,Mrvine,water,Shadow,
+BD02-EN_0007,Set 2,Poseidon 9,water,Shadow,
+BD02-EN_0008,Set 2,Tan Eg,earth,Shadow,
+BD02-EN_0009,Set 2,Dlagr Shavuw Itec U,dark,Shadow,
+BD02-EN_0010,Set 2,Segurity Mecha Robo 2,water,Partner,
+BD02-EN_0011,Set 2,Scything Skullspider 2,water,Partner,
+BD02-EN_0012,Set 2,Machine Gun Crab,water,Partner,
+BD02-EN_0013,Set 2,Rilgurner Roboscorpion 2,water,Partner,
+BD02-EN_0014,Set 2,Centipede S 2,water,Partner,
+BD02-EN_0015,Set 2,Minister Sia2,light,Partner,
+BD02-EN_0016,Set 2,Ature Abyssal Dragon 2,water,Partner,
+BD02-EN_0017,Set 2,Pink Soldier 3,fire,Partner,
+BD02-EN_0018,Set 2,Dragnovstsiaa,dark,Partner,
+BD02-EN_0019,Set 2,Vanov Si,dark,Partner,
+BD02-EN_0020,Set 2,Gustovt Sy,dark,Partner,
+BD02-EN_0021,Set 2,Tornado Raptor 2,wind,Partner,
+BD02-EN_0022,Set 2,Mm 6,earth,Partner,
+BD02-EN_0023,Set 2,Klukec Esti D,fire,Partner,
+BD02-EN_0024,Set 2,,earth,Partner,
+BD02-EN_0025,Set 2,Olas C,water,Partner,
+BD02-EN_0026,Set 2,Marumaro,wind,Partner,
+BD02-EN_0027,Set 2,Tet Saber Tiger,water,Partner,
+BD02-EN_0028,Set 2,Nene Sr,dark,Partner,
+BD02-EN_0029,Set 2,Deathroysr,dark,Partner,
+BD02-EN_0030,Set 2,Aaby Ct,dark,Partner,
+BD02-EN_0031,Set 2,Armored Fish 2,water,Partner,
+BD02-EN_0032,Set 2,Alding Mammoth 2,water,Partner,
+BD02-EN_0033,Set 2,Relolon Defender 2,water,Partner,
+BD02-EN_0034,Set 2,Pelicon S 2,water,Partner,
+BD02-EN_0035,Set 2,Polar Lazy Bear 2,water,Partner,
+BD02-EN_0036,Set 2,Bomber Mecha Crab 2,water,Partner,
+BD02-EN_0037,Set 2,Poison Helmet,water,Partner,
+BD02-EN_0038,Set 2,Jia 86H,water,Partner,
+BD02-EN_0039,Set 2,,water,Partner,
+BD02-EN_0040,Set 2,Numerun F 2,wind,Partner,
+BD02-EN_0041,Set 2,Delphinium 2,dark,Partner,
+BD02-EN_0042,Set 2,Salinas 2,dark,Partner,
+BD02-EN_0043,Set 2,Euphir Stias,dark,Shadow,
+BD02-EN_0044,Set 2,Saver Rc E See,dark,Partner,
+BD02-EN_0045,Set 2,Varovit Se,dark,Partner,
+BD02-EN_0046,Set 2,Alvhaimw,dark,Partner,
+BD02-EN_0047,Set 2,Jeucalion E,dark,Partner,
+BD02-EN_0048,Set 2,Vil Mural O,earth,Partner,
+BD02-EN_0049,Set 2,Misfortune Mural 2,earth,Partner,
+BD02-EN_0050,Set 2,Poison Mural 2,earth,Partner,
+BD02-EN_0051,Set 2,Chaos Mural 1,earth,Partner,
+BD02-EN_0052,Set 2,Vrange Solvick 2,earth,Partner,
+BD02-EN_0053,Set 2,Tore Wolf Ghos 2,earth,Partner,
+BD02-EN_0054,Set 2,Missile Mole 2,earth,Partner,
+BD02-EN_0055,Set 2,Lying Needle Mole 2,earth,Partner,
+BD02-EN_0056,Set 2,Sda A Et,earth,Partner,
+BD02-EN_0057,Set 2,Flamdutan Vinukan 2,earth,Partner,
+BD02-EN_0058,Set 2,Hhicag I,,Command,
+BD02-EN_0059,Set 2,Ikpride,,Command,
+BD02-EN_0060,Set 2,Ward,,Command,
+BD02-EN_0061,Set 2,Nesse,,Command,
+BD02-EN_0062,Set 2,Llateral Damage,,Command,
+BD02-EN_0063,Set 2,Avows Write,,Command,
+BD02-EN_0064,Set 2,Load Ss,,Command,
+BD02-EN_0065,Set 2,Eat Tidal Wave,,Command,
+BD02-EN_0066,Set 2,Tack Q Recover,,Command,
+BD02-EN_0067,Set 2,Inspiracy,,Command,
+BD02-EN_0068,Set 2,Imouflage,,Command,
+BD02-EN_0069,Set 2,Stical Advantage 7,,Command,
+BD02-EN_0070,Set 2,Cker Punch,,Command,
+BD02-EN_0071,Set 2,Ir Exchange,,Command,
+BD02-EN_0072,Set 2,Illy,,Command,
+BD02-EN_0073,Set 2,Witch,,Command,
+BD02-EN_0074,Set 2,Iendly Fireso,,Command,
+BD02-EN_0075,Set 2,Bral Bracelet,,Command,
+BD02-EN_0076,Set 2,Sral Necklace,,Command,
+BD02-EN_0077,Set 2,Ioenix Talon,,Command,
+BD02-EN_0078,Set 2,Vival Measures,,Command,
+BD02-EN_0079,Set 2,Inforcemen Ts,,Command,
+BD02-EN_0080,Set 2,,,Command,
+BD02-EN_0081,Set 2,Racle Fountain,,Command,
+BD02-EN_0082,Set 2,Jiher Ocean As,,Command,
+BD02-EN_0083,Set 2,Are,,Command,
+BD02-EN_0084,Set 2,Igry Quake,,Command,
+BD02-EN_0085,Set 2,Irror Earring,,Command,
+BD02-EN_0086,Set 2,Eddling,,Command,
+BD02-EN_0087,Set 2,Leased Potentials,,Command,
+BD02-EN_0088,Set 2,Ing-Range Attach,,Command,
+BD02-EN_0089,Set 2,Adsawlt,,Command,
+BD02-EN_0090,Set 2,Ject,,Command,
+BD02-EN_0091,Set 2,Trifying Breathig,,Command,
+BD02-EN_0092,Set 2,,,Command,
+BD02-EN_0093,Set 2,All Of Defense,,Command,
+BD02-EN_0094,Set 2,Surrection 9,,Command,
+BD02-EN_0095,Set 2,Lk Sop,,Command,
+BD02-EN_0096,Set 2,Ver A,,Command,
+BD02-EN_0097,Set 2,Ame Bracelet,,Command,
+BD02-EN_0098,Set 2,Ater Bracelet,,Command,
+BD02-EN_0099,Set 2,Ind Bracelet,,Command,
+BD02-EN_0100,Set 2,Irth Bracelet,,Command,
+BDH1-EN_0001,Demo Deck,Phoenix,light,Shadow,
+BDH1-EN_0002,Demo Deck,Minotaur,light,Shadow,
+BDH1-EN_0003,Demo Deck,Blue Dragon,light,Shadow,
+BDH1-EN_0004,Demo Deck,Shu,light,Partner,
+BDH1-EN_0005,Demo Deck,Kluke,fire,Partner,
+BDH1-EN_0006,Demo Deck,Jiro,earth,Partner,
+BDH1-EN_0007,Demo Deck,Blue Dragon & Shu,light,Partner,
+BDH1-EN_0008,Demo Deck,Cockatrice,none,Partner,
+BDH1-EN_0009,Demo Deck,Poo Snake,none,Partner,
+BDH1-EN_0010,Demo Deck,Fat Rat,earth,Partner,
+BDH1-EN_0011,Demo Deck,Green Grunt,wind,Partner,
+BDH1-EN_0012,Demo Deck,Midnight Ghost,dark,Partner,
+BDH1-EN_0013,Demo Deck,Magic Sword,,Command,
+BDH1-EN_0014,Demo Deck,Endure,,Command,
+BDH1-EN_0015,Demo Deck,Critical,,Command,
+BDH1-EN_0016,Demo Deck,Guard,,Command,
+BDH1-EN_0017,Demo Deck,Surprise,,Command,
+BDH1-EN_0018,Demo Deck,Field Barrier,,Command,
+BDH1-EN_0019,Demo Deck,Mechat,,Command,
+BDH1-EN_0020,Demo Deck,Copper Necklace,,Command,
+BDS1-EN_0001,Light Starter,Phoenix,light,Shadow,
+BDS1-EN_0002,Light Starter,Minotaur,light,Shadow,
+BDS1-EN_0003,Light Starter,Blue Dragon,light,Shadow,
+BDS1-EN_0004,Light Starter,Saber Tiger,light,Shadow,
+BDS1-EN_0005,Light Starter,Killer Bat,light,Shadow,
+BDS1-EN_0006,Light Starter,Shu,light,Partner,
+BDS1-EN_0007,Light Starter,Kluke,fire,Partner,
+BDS1-EN_0008,Light Starter,Jiro,earth,Partner,
+BDS1-EN_0009,Light Starter,Zola,none,Partner,
+BDS1-EN_0010,Light Starter,Marumaro,wind,Partner,
+BDS1-EN_0011,Light Starter,Bouquet,none,Partner,
+BDS1-EN_0012,Light Starter,Legalas,earth,Partner,
+BDS1-EN_0013,Light Starter,Conrad,light,Partner,
+BDS1-EN_0014,Light Starter,Snow Wolf Ghost,water,Partner,
+BDS1-EN_0015,Light Starter,Flame Wolf Ghost,fire,Partner,
+BDS1-EN_0016,Light Starter,Icefire wolf ghost,dark,Partner,
+BDS1-EN_0017,Light Starter,Blazing Jelly,fire,Partner,
+BDS1-EN_0018,Light Starter,Midnight Ghost,dark,Partner,
+BDS1-EN_0019,Light Starter,Fat Rat,earth,Partner,
+BDS1-EN_0020,Light Starter,Hot Hot Hydra,fire,Partner,
+BDS1-EN_0021,Light Starter,Boreal Raptor,wind,Partner,
+BDS1-EN_0022,Light Starter,Gale Wolf Ghost,wind,Partner,
+BDS1-EN_0023,Light Starter,Endure,,Command,
+BDS1-EN_0024,Light Starter,Foot Sweep,,Command,
+BDS1-EN_0025,Light Starter,Cease Fire,,Command,
+BDS1-EN_0026,Light Starter,Kluke's Frying Pan,,Command,
+BDS1-EN_0027,Light Starter,Mischief,,Command,
+BDS1-EN_0028,Light Starter,Magic Sword Lv.2,,Command,
+BDS1-EN_0029,Light Starter,The Honorable Shield,,Command,
+BDS1-EN_0030,Light Starter,Counterattack Boost,,Command,
+BDS1-EN_0031,Light Starter,Absolute Counterattack,,Command,
+BDS1-EN_0032,Light Starter,Back In the Game,,Command,
+BDS1-EN_0033,Light Starter,Sahlia's Cookies,,Command,
+BDS1-EN_0034,Light Starter,Field Barrier,,Command,
+BDS1-EN_0035,Light Starter,Mechat,,Command,
+BDS1-EN_0036,Light Starter,Phoenix Wing,,Command,
+BDS1-EN_0037,Light Starter,Granted Audience With a King,,Command,
+BDS1-EN_0038,Light Starter,Invisibility,,Command,
+BDS2-EN_0001,Shadow Starter,Chimera Lv,,Command,
+BDS2-EN_0002,Shadow Starter,Chimera Lvdi0,,Command,
+BDS2-EN_0003,Shadow Starter,Chimera Lv30,dark,Shadow,
+BDS2-EN_0004,Shadow Starter,Chimera Lvhis,dark,Shadow,
+BDS2-EN_0005,Shadow Starter,Nene,dark,Partner,
+BDS2-EN_0006,Shadow Starter,Deathroy - 1,dark,Partner,
+BDS2-EN_0007,Shadow Starter,General Logi 1,dark,Partner,
+BDS2-EN_0008,Shadow Starter,Gilliam,dark,Partner,
+BDS2-EN_0009,Shadow Starter,Cynthia Ss,dark,Partner,
+BDS2-EN_0010,Shadow Starter,Lemaire A,dark,Partner,
+BDS2-EN_0011,Shadow Starter,Servan Meghr Rudd A 2,water,Partner,
+BDS2-EN_0012,Shadow Starter,Servant Mecha Robob 2,water,Partner,
+BDS2-EN_0013,Shadow Starter,Defense Mecha Robo 2,water,Partner,
+BDS2-EN_0014,Shadow Starter,Lard Shark 62,dark,Partner,
+BDS2-EN_0015,Shadow Starter,Siaboccsciy,dark,Partner,
+BDS2-EN_0016,Shadow Starter,Blazing Jelly 2,fire,Partner,
+BDS2-EN_0017,Shadow Starter,Midnight Ghost 2,dark,Partner,
+BDS2-EN_0018,Shadow Starter,Fatrat S2X,earth,Partner,
+BDS2-EN_0019,Shadow Starter,Hot Hot Hydra 2,fire,Partner,
+BDS2-EN_0020,Shadow Starter,Boreal Raptor 2,wind,Partner,
+BDS2-EN_0021,Shadow Starter,Sale Wolf Ghus 2,wind,Partner,
+BDS2-EN_0022,Shadow Starter,Dure,,Command,
+BDS2-EN_0023,Shadow Starter,Ot Sweep,,Command,
+BDS2-EN_0024,Shadow Starter,Ase-Fire Ss,,Command,
+BDS2-EN_0025,Shadow Starter,Schief,,Command,
+BDS2-EN_0026,Shadow Starter,Gic Sword Lv2,,Command,
+BDS2-EN_0027,Shadow Starter,Junterattack Boo,,Command,
+BDS2-EN_0028,Shadow Starter,Solute Counteratta,,Command,
+BDS2-EN_0029,Shadow Starter,E-On-One Battl,,Command,
+BDS2-EN_0030,Shadow Starter,Ihlia'S Cookies,,Command,
+BDS2-EN_0031,Shadow Starter,Eld Barrier,,Command,
+BDS2-EN_0032,Shadow Starter,Echat Sss,,Command,
+BDS2-EN_0033,Shadow Starter,Joenix Wing 9,,Command,
+BDS2-EN_0034,Shadow Starter,Cret Training,,Command,
+BDS2-EN_0035,Shadow Starter,Ack In The Games,,Command,
+BDS2-EN_0036,Shadow Starter,Anted Audience With Aik,,Command,
+BDS2-EN_0037,Shadow Starter,Visibility 9,,Command,
+Receipt_20230713_0001,Parallel Shadows,Sword Fighter,fire,Shadow,
+Receipt_20230713_0002,Parallel Shadows,Grand Knight,fire,Shadow,
+Receipt_20230713_0003,Parallel Shadows,Legend Knight,fire,Shadow,
+Receipt_20230713_0004,Parallel Shadows,Gnome,earth,Shadow,
+Receipt_20230713_0005,Parallel Shadows,Dwarf,earth,Shadow,
+Receipt_20230713_0006,Parallel Shadows,Atlas,earth,Shadow,
+Receipt_20230713_0007,Parallel Shadows,Titan,earth,Shadow,
+Receipt_20230713_0008,Parallel Shadows,Blue Dragon Lv.1,none,Shadow,
+Receipt_20230713_0009,Parallel Shadows,Nymph,water,Shadow,
+Receipt_20230713_0010,Parallel Shadows,Siren,water,Shadow,
+Receipt_20230713_0011,Parallel Shadows,Undine,water,Shadow,
+Receipt_20230713_0012,Parallel Shadows,Poseidon,water,Shadow,
+Receipt_20230713_0013,Parallel Shadows,Pegasus,wind,Shadow,
+Receipt_20230713_0014,Parallel Shadows,Sylphide,wind,Shadow,
+Receipt_20230713_0015,Parallel Shadows,Zephyrus,wind,Shadow,
+Receipt_20230713_0016,Parallel Shadows,Guardian Angel,wind,Shadow,
+Receipt_20230713_0017,Parallel Shadows,Black Shadow Type One,dark,Shadow,
