@@ -185,7 +185,8 @@ def save_label(card_id, payload):
     in-memory catalog so the next /api/cards call sees the change without a
     full rescan.
 
-    payload = {"name": str, "set": str, "type": str, "element": list[str]}
+    payload = {"name": str, "set": str, "type": str, "element": list[str],
+               "duplicate_of": str}
 
     Raises KeyError if `card_id` is not in the image scan.
     Returns the updated public API record for the card.
@@ -194,6 +195,7 @@ def save_label(card_id, payload):
     set_name = (payload.get("set") or "").strip()
     type_ = (payload.get("type") or "").strip()
     raw_elements = payload.get("element") or []
+    duplicate_of = (payload.get("duplicate_of") or "").strip()
 
     if type_ in vocab.TYPES_WITHOUT_ELEMENT:
         element = ()
@@ -205,10 +207,14 @@ def save_label(card_id, payload):
     with _lock:
         if card_id not in _catalog:
             raise KeyError(card_id)
+        # Self-reference makes no sense; treat it as "I am the canonical".
+        if duplicate_of == card_id:
+            duplicate_of = ""
 
         row = labels.LabelRow(
             id=card_id, set=set_name, name=name,
             element=element, type=type_,
+            duplicate_of=duplicate_of,
         )
         _label_rows[card_id] = row
         labels.dump(_label_rows, config.labels_path())

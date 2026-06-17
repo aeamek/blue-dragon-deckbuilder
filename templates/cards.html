@@ -22,6 +22,9 @@
     <label class="hide-unlabeled">
       <input type="checkbox" id="hideUnlabeled"> Hide unlabeled
     </label>
+    <label class="hide-unlabeled">
+      <input type="checkbox" id="hideDuplicates" checked> Hide duplicates
+    </label>
     <label class="notice">Size
       <input type="range" id="sizeRange" min="110" max="240" value="150">
     </label>
@@ -46,6 +49,7 @@ const state = {
   selectedTypes: new Set(),
   search: "",
   hideUnlabeled: false,
+  hideDuplicates: true,
 };
 const grid = document.getElementById("grid");
 
@@ -69,6 +73,7 @@ function render() {
       () => openEditor(LAST_FILTERED, i, {
         getVocab: fetchVocab,
         onSave: (updated) => onCardSaved(updated),
+        allCards: CARDS,
       }));
     frag.appendChild(tile);
   });
@@ -98,6 +103,10 @@ document.getElementById("search").addEventListener("input", (e) => {
 });
 document.getElementById("hideUnlabeled").addEventListener("change", (e) => {
   state.hideUnlabeled = e.target.checked;
+  render();
+});
+document.getElementById("hideDuplicates").addEventListener("change", (e) => {
+  state.hideDuplicates = e.target.checked;
   render();
 });
 setupSizeSlider(document.getElementById("sizeRange"));

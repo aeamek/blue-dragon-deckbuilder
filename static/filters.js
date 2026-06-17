@@ -15,6 +15,9 @@ function buildChipRows(vocab) {
 //           search: string, hideUnlabeled: bool }
 function cardPasses(card, state) {
   if (state.hideUnlabeled && !card.name && !card.set) return false;
+  // Default hide-duplicates is on; cards that point at another canonical
+  // drop out of the grid until the toggle is flipped off.
+  if (state.hideDuplicates !== false && card.duplicate_of) return false;
 
   if (state.selectedSets.size && !state.selectedSets.has((card.set || "").toLowerCase())) return false;
 

@@ -28,6 +28,9 @@
         <label class="hide-unlabeled">
           <input type="checkbox" id="hideUnlabeled"> Hide unlabeled
         </label>
+        <label class="hide-unlabeled">
+          <input type="checkbox" id="hideDuplicates" checked> Hide duplicates
+        </label>
         <label class="notice">Size
           <input type="range" id="sizeRange" min="110" max="240" value="150">
         </label>
@@ -80,6 +83,7 @@ const filterState = {
   selectedTypes: new Set(),
   search: "",
   hideUnlabeled: false,
+  hideDuplicates: true,
 };
 
 function deckTotal() {
@@ -107,6 +111,7 @@ function tileFor(c) {
     if (idx >= 0) openEditor(LAST_FILTERED, idx, {
       getVocab: fetchVocab,
       onSave: onCardSaved,
+      allCards: CARDS,
     });
   });
   const minus = tile.querySelector('[data-act=minus]');
@@ -256,7 +261,7 @@ function renderDeckList(d) {
       const list = d.cards;
       const idx = list.findIndex(x => x.id === it.id);
       if (idx >= 0) openEditor(list, idx, {
-        getVocab: fetchVocab, onSave: onCardSaved,
+        getVocab: fetchVocab, onSave: onCardSaved, allCards: CARDS,
       });
     });
     list.appendChild(row);
@@ -315,6 +320,10 @@ document.getElementById("search").addEventListener("input", (e) => {
 });
 document.getElementById("hideUnlabeled").addEventListener("change", (e) => {
   filterState.hideUnlabeled = e.target.checked;
+  renderGrid();
+});
+document.getElementById("hideDuplicates").addEventListener("change", (e) => {
+  filterState.hideDuplicates = e.target.checked;
   renderGrid();
 });
 document.getElementById("viewAll").addEventListener("click", () => setView("all"));

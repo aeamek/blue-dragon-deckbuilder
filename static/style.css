@@ -231,6 +231,9 @@ input[type=number] { width: 56px; }
 .ed-status { font-size: 12px; min-height: 16px; color: var(--sub); }
 .ed-status[data-kind=saved] { color: var(--good); }
 .ed-status[data-kind=error] { color: var(--danger); }
+.ed-dupe-info { font-size: 12px; min-height: 16px; color: var(--sub); margin-top: -6px; }
+.ed-dupe-info[data-kind=ok] { color: var(--good); }
+.ed-dupe-info[data-kind=error] { color: var(--danger); }
 .ed-nav {
   font-size: 24px; line-height: 1;
   background: transparent; border: 1px solid var(--line); color: var(--text);
