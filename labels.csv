@@ -1,6 +1,5 @@
 id,set,name,element,type
 BD01-EN_0001,Set 1,Soldier,fire,Shadow
-BD01-EN_0001,Set 1,Soldier,fire,Shadow
 BD01-EN_0002,Set 1|Parallel Shadows,Sword Fighter,fire,Shadow
 BD01-EN_0003,Set 1|Parallel Shadows,Grand Knight,fire,Shadow
 BD01-EN_0004,Set 1|Parallel Shadows,Legend Knight,fire,Shadow
@@ -73,13 +72,9 @@ BD02-EN_0009,Set 2|Parallel Shadows,Black Shadow Type One,dark,Shadow
 BD02-EN_0010,Set 2,Security Mecha Robo,none,Partner
 BD02-EN_0011,Set 2,Scything Skull-Spider,none,Partner
 BD02-EN_0012,Set 2,Machine Gun Crab,none,Partner
-BD02-EN_0013,Set 2,Tailgunner Robo-Scorpion,water,Partner
+BD02-EN_0013,Set 2,Tailgunner Robo-Scorpion,none,Partner
 BD02-EN_0014,Set 2,Centipede,none,Partner
 BD02-EN_0015,Set 2,Minister,light,Partner
-BD02-EN_0012,Set 2,Machine Gun Crab,none,Partner
-BD02-EN_0013,Set 2,Tailgunner Robo-Scorpion,none,Partner
-BD02-EN_0014,Set 2,Centipede S 2,none,Partner
-BD02-EN_0015,Set 2,Minister Sia2,light,Partner
 BD02-EN_0016,Set 2,Azure Abyssal Dragon,water,Partner
 BD02-EN_0017,Set 2,Pink Soldier,fire,Partner
 BD02-EN_0018,Set 2,Dragnov,dark,Partner
@@ -108,10 +103,6 @@ BD02-EN_0040,Set 2,Homeron,none,Partner
 BD02-EN_0041,Set 2,Delphinium,dark,Partner
 BD02-EN_0042,Set 2,Salinas,dark,Partner
 BD02-EN_0043,Set 2,Euphir,dark,Partner
-BD02-EN_0044,Set 2,Isavel,dark,Partner
-BD02-EN_0045,Set 2,Yarovit,dark,Partner
-BD02-EN_0046,Set 2,Alvhaim,dark,Partner
-BD02-EN_0047,Set 2,Deucalion,dark,Partner
 BD02-EN_0044,Set 2,Isavel,dark,Partner
 BD02-EN_0045,Set 2,Yarovit,dark,Partner
 BD02-EN_0046,Set 2,Alvhaim,dark,Partner
@@ -211,8 +202,6 @@ BDS1-EN_0037,Light Starter|Shadow Starter,Granted Audience With a King,,Command
 BDS1-EN_0038,Light Starter|Shadow Starter,Invisibility,,Command
 BDS2-EN_0001,Shadow Starter,Chimera Lv.1,dark,Shadow
 BDS2-EN_0002,Shadow Starter,Chimera Lv.2,dark,Shadow
-BDS2-EN_0003,Shadow Starter,Chimera Lv.3,dark,Shadow
-BDS2-EN_0004,Shadow Starter,Chimera Lv.4,dark,Shadow
 BDS2-EN_0003,Shadow Starter,Chimera Lv.3,dark,Shadow
 BDS2-EN_0004,Shadow Starter,Chimera Lv.4,dark,Shadow
 BDS2-EN_0005,Shadow Starter,Nene,dark,Partner
