@@ -7,6 +7,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 import catalog
 import config
+import vocab
 
 CARD_ASPECT = 4052 / 2824          # height / width of the source scans
 BG = (31, 37, 48)                  # dark slate backdrop
@@ -183,9 +184,8 @@ def render_deck(deck, show_badge=True):
         rec = catalog.get(cid)
         label = rec.get("label") if rec else None
         if label is None:
-            return (1, "", "", cid)
-        primary_set = label.set[0] if label.set else ""
-        return (0, primary_set, label.name.lower(), cid)
+            return (vocab.type_rank(None), "", cid)
+        return (vocab.type_rank(label.type), (label.name or "").lower(), cid)
 
     entries.sort(key=_sort_key)
     if not entries:

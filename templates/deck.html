@@ -69,7 +69,7 @@ const DECK_ID = {{ deck_id|tojson }};
 const MAX = {{ max_copies }};
 const TARGET = {{ target }};
 let CARDS = [];
-let cardMeta = {};                // id -> { set, name }
+let cardMeta = {};                // id -> { set, name, type }
 let counts = {};
 let deckOnly = false;
 let LAST_FILTERED = [];
@@ -173,10 +173,12 @@ function changeCard(id, target) {
   if (deckOnly && (prev === 0 || target === 0)) {
     renderGrid();
   }
-  scheduleSave(id);
+  queueDeckSave(id);
 }
 
-function scheduleSave(id) {
+// NB: named queueDeckSave (not scheduleSave) to avoid colliding with the
+// editor's own scheduleSave — both scripts share the global scope here.
+function queueDeckSave(id) {
   clearTimeout(saveTimers[id]);
   saveTimers[id] = setTimeout(() => saveCard(id), 250);
 }
@@ -199,15 +201,10 @@ function localDeck() {
     id,
     set: cardMeta[id]?.set || [],
     name: cardMeta[id]?.name || null,
+    type: cardMeta[id]?.type || null,
     count: counts[id],
   }));
-  cards.sort((a, b) => {
-    const sa = (a.set[0] || "~"), sb = (b.set[0] || "~");
-    if (sa !== sb) return sa < sb ? -1 : 1;
-    const na = (a.name || "").toLowerCase(), nb = (b.name || "").toLowerCase();
-    if (na !== nb) return na < nb ? -1 : 1;
-    return a.id < b.id ? -1 : 1;
-  });
+  cards.sort(compareCards);
   return { cards, total: deckTotal(), missing: [] };
 }
 
@@ -224,7 +221,7 @@ function applyResolved(d) {
 function onCardSaved(updated) {
   const i = CARDS.findIndex(c => c.id === updated.id);
   if (i >= 0) CARDS[i] = updated;
-  cardMeta[updated.id] = { set: updated.set, name: updated.name };
+  cardMeta[updated.id] = { set: updated.set, name: updated.name, type: updated.type };
   renderDeckList(localDeck());
   renderGrid();
 }
@@ -352,7 +349,7 @@ async function init() {
     ]);
     CARDS = (cards && cards.cards) || [];
     cardMeta = {};
-    for (const c of CARDS) cardMeta[c.id] = { set: c.set, name: c.name };
+    for (const c of CARDS) cardMeta[c.id] = { set: c.set, name: c.name, type: c.type };
     renderStandardChips(vocab, filterState, renderGrid);
     nameInput.value = deck.name;
     ingest(deck);

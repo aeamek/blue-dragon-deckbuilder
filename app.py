@@ -14,6 +14,8 @@ import render
 import vocab
 
 app = Flask(__name__)
+# Local dev tool: don't let browsers cache static JS/CSS, so updates always load.
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
 # Populated by init(); kept as a module-level handle so the routes can read it
 # without re-scanning on every request.
@@ -79,14 +81,23 @@ def api_vocab():
 
 @app.route("/api/labels/<card_id>", methods=["PUT"])
 def api_label_put(card_id):
-    body = request.get_json(silent=True) or {}
-    if not isinstance(body.get("element"), list):
+    body = request.get_json(silent=True)
+    if not isinstance(body, dict):
         abort(400)
-    if not isinstance(body.get("name", ""), str): abort(400)
-    if not isinstance(body.get("set"), list): abort(400)
-    if not isinstance(body.get("type", ""), str): abort(400)
+    # Normalize: missing/null fields default to empty; save_label tolerates these.
+    payload = {
+        "name": body.get("name") or "",
+        "set": body.get("set") or [],
+        "type": body.get("type") or "",
+        "element": body.get("element") or [],
+    }
+    # Reject only genuinely wrong shapes (e.g. a string where a list is expected).
+    if not isinstance(payload["name"], str): abort(400)
+    if not isinstance(payload["set"], list): abort(400)
+    if not isinstance(payload["type"], str): abort(400)
+    if not isinstance(payload["element"], list): abort(400)
     try:
-        rec = catalog.save_label(card_id, body)
+        rec = catalog.save_label(card_id, payload)
     except KeyError:
         abort(404)
     return jsonify(rec)
@@ -146,7 +157,7 @@ def api_deck_card(deck_id):
     body = request.get_json(silent=True) or {}
     card_id = body.get("card_id")
     count = body.get("count", 0)
-    if card_id is None:
+    if not isinstance(card_id, str) or not isinstance(count, (int, float)):
         abort(400)
     deck = decks.set_card(deck_id, card_id, count)
     if deck is None:
